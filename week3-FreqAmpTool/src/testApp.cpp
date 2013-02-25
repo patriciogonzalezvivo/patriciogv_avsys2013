@@ -12,33 +12,32 @@ void testApp::setup(){
     center.set(250,250);
     ofSetWindowShape(1024, 540);
     
-    angle   = 0.0f;
-    radius  = 140.0f;
+    phase   = 0.0f;
+    amplitud  = 140.0f;
     frequency = 1.0f;
-    
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
 
-    float phaseAdder = (float)(frequency * TWO_PI) / (float)ofGetFrameRate();
-    angle += phaseAdder;
+    phaseAdder = (float)(frequency * TWO_PI) / (float)ofGetFrameRate();
+    phase += phaseAdder;
         
     //  Just for making it clear angle could be more than the 2PI
     //
-    while (angle > PI*2)
-        angle -= PI*2;
+    while (phase > PI*2)
+        phase -= PI*2;
     
     //  Get the cartesian 
     //
-    dotPos.x = cos(angle) * radius;
-    dotPos.y = sin(angle) * radius;
+    dotPos.x = cos(phase) * amplitud;
+    dotPos.y = sin(phase) * amplitud;
     
     //  Store the Y (sin) position
     //
     sinHistory.push_back(dotPos.y);
 
-    if (sinHistory.size() > 400){
+    while (sinHistory.size() > ofGetWidth()-center.x-200-30){
         sinHistory.erase(sinHistory.begin());
     }
 }
@@ -47,7 +46,9 @@ void testApp::update(){
 void testApp::draw(){
     ofBackgroundGradient(ofColor::gray, ofColor::black);
     
-    ofDrawBitmapString("Freq = " + ofToString(frequency) + "Hz", 15,15);
+    ofDrawBitmapString("Use the arrows to modify the frequency and drag the mouse to change the amplitud", 15,15);
+    ofDrawBitmapString("Freq = " + ofToString(frequency) + "Hz ( App. at " + ofToString((float)ofGetFrameRate()) + "Hz )", 15,30);
+    
     
     ofPushMatrix();
     ofTranslate(center);
@@ -87,7 +88,7 @@ void testApp::draw(){
     //  Draw angle References
     //
     ofPolyline  angleLine;
-    angleLine.arc(0, 0, radius*0.3, radius*0.3, 0, ofRadToDeg(angle));
+    angleLine.arc(0, 0, amplitud*0.3, amplitud*0.3, 0, ofRadToDeg(phase));
     ofNoFill();
     ofSetColor(255,180);
     angleLine.draw();
@@ -95,9 +96,9 @@ void testApp::draw(){
     //  Draw sin and cos proyected dots
     //
     ofSetColor(255,100);
-    ofLine(lenghtOfAxis + 30,-radius, lenghtOfAxis + 30,radius);
-    ofDrawBitmapString(ofToString(-radius), lenghtOfAxis + 30 - 12,-radius -5);
-    ofDrawBitmapString(ofToString(radius), lenghtOfAxis + 30 - 3, radius + 15 );
+    ofLine(lenghtOfAxis + 30,-amplitud, lenghtOfAxis + 30,amplitud);
+    ofDrawBitmapString(ofToString(-amplitud), lenghtOfAxis + 30 - 12,-amplitud -5);
+    ofDrawBitmapString(ofToString(amplitud), lenghtOfAxis + 30 - 3, amplitud + 15 );
     ofPoint sinPos = ofPoint(lenghtOfAxis + 30, dotPos.y);
     drawDot(sinPos);
     
@@ -126,7 +127,7 @@ void testApp::drawDot(ofPoint _pos){
     ofSetColor(255, 0,0);
     ofCircle(_pos, 5);
     
-    ofPopStyle();
+    ofPopStyle();  
 }
 
 //--------------------------------------------------------------
@@ -136,7 +137,9 @@ void testApp::keyPressed(int key){
         frequency -= 0.1;
     } else if (key == OF_KEY_RIGHT){
         frequency += 0.1;
-    } 
+    } else if (key == 'f'){
+        ofToggleFullscreen();
+    }
 }
 
 //--------------------------------------------------------------
@@ -152,7 +155,7 @@ void testApp::mouseMoved(int x, int y ){
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
     ofPoint mouse = ofPoint(x,y) - center;
-    radius = mouse.length();
+    amplitud = mouse.length();
     
 }
 
@@ -168,7 +171,7 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-
+    center.y = h*0.5;
 }
 
 //--------------------------------------------------------------

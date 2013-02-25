@@ -25,7 +25,9 @@ public:
     ofPoint center;
     ofPoint dotPos;
 
-    float   angle;
-    float   radius;     //  Amplitud
-    float   frequency;  //  Frecuency
+    float   phase;
+    float   phaseAdder;
+    
+    float   amplitud;
+    float   frequency;
 };
