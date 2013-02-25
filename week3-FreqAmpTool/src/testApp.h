@@ -28,6 +28,4 @@ public:
     float   angle;
     float   radius;     //  Amplitud
     float   frequency;  //  Frecuency
-
-    bool    bPlay;
 };
