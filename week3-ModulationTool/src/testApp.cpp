@@ -12,33 +12,52 @@ void testApp::setup(){
     center.set(250,250);
     ofSetWindowShape(1024, 540);
     
-    angle   = 0.0f;
-    radius  = 140.0f;
+    phase   = 0.0f;
+    amplitud  = 140.0f;
+    frequency = 1.0f;
+    
+    modAngle = 0.0f;
+    modRadio = 140.0f;
+    
+    bFM = false;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
-    
-    if ( bPlay ){
-        //  If it's playing recursively add 
-        //
-        angle += 1.0/ofGetFrameRate();
-        
-        //  Just for making it clear angle could be more than the 2PI
-        //
-        while (angle > PI*2)
-            angle -= PI*2;
-    }
-    
-    //  Get the cartesian 
+    //  Modulator step
     //
-    dotPos.x = cos(angle) * radius;
-    dotPos.y = sin(angle) * radius;
+    modAngle += ofMap(mouseX,0,ofGetWidth(),0,10)*TWO_PI/ofGetFrameRate();
+    while (modAngle > PI*2)
+        modAngle -= PI*2;
+    
+    if (!bFM){
+        amplitud = 1 + cos(modAngle)*modRadio;
+        frequency = 1.0f;
+        ofSetWindowTitle("AM");
+    } else {
+        frequency = 1 + cos(modAngle)*5;
+        amplitud = modRadio;
+        ofSetWindowTitle("FM");
+    }
+        
+    phaseAdder = (float)(frequency * TWO_PI) / (float)ofGetFrameRate();
+    phase += phaseAdder;
+        
+    //  Just for making it clear angle could be more than the 2PI
+    //
+    while (phase > PI*2)
+        phase -= PI*2;
+    
+    //  Get the cartesian
+    //
+    dotPos.x = cos(phase) * amplitud;
+    dotPos.y = sin(phase) * amplitud;
     
     //  Store the Y (sin) position
     //
     sinHistory.push_back(dotPos.y);
-    if (sinHistory.size() > 400){
+
+    while (sinHistory.size() > ofGetWidth()-center.x-200-30){
         sinHistory.erase(sinHistory.begin());
     }
 }
@@ -47,7 +66,9 @@ void testApp::update(){
 void testApp::draw(){
     ofBackgroundGradient(ofColor::gray, ofColor::black);
     
-    ofDrawBitmapString("Press a key or drag with your mouse", 15,15);
+    ofDrawBitmapString("Switch between AM/FM", 15,15);
+    ofDrawBitmapString("Freq = " + ofToString(frequency) + "Hz ( App. at " + ofToString((float)ofGetFrameRate()) + "Hz )", 15,30);
+    
     
     ofPushMatrix();
     ofTranslate(center);
@@ -87,27 +108,30 @@ void testApp::draw(){
     //  Draw angle References
     //
     ofPolyline  angleLine;
-    angleLine.arc(0, 0, radius*0.3, radius*0.3, 0, ofRadToDeg(angle));
+    angleLine.arc(0, 0, amplitud*0.3, amplitud*0.3, 0, ofRadToDeg(phase));
     ofNoFill();
     ofSetColor(255,180);
     angleLine.draw();
-    ofDrawBitmapString("a = " + ofToString(angle,2) + " (" + ofToString((int)(ofRadToDeg(angle))) + " deg)", radius*0.3 + 5, 15);
     
-    //  Draw sin and cos proyected dots
+    //  Draw sin proyected dots
     //
     ofSetColor(255,100);
-    ofLine(-radius, lenghtOfAxis + 30, radius, lenghtOfAxis + 30);
-    ofDrawBitmapString("-1", -radius - 15, lenghtOfAxis + 30 + 5);
-    ofDrawBitmapString("1", radius + 5, lenghtOfAxis + 30 + 5);
-    ofPoint cosPos = ofPoint(dotPos.x,  lenghtOfAxis + 30);
-    ofDrawBitmapString("cos(a).r = " + ofToString( cos(angle),2) , cosPos + ofPoint(-3,15));
-    drawDot(cosPos);
-    ofLine(lenghtOfAxis + 30,-radius, lenghtOfAxis + 30,radius);
-    ofDrawBitmapString("-1", lenghtOfAxis + 30 - 12,-radius -5);
-    ofDrawBitmapString("1", lenghtOfAxis + 30 - 3, radius + 15 );
+    ofLine(lenghtOfAxis + 30,-amplitud, lenghtOfAxis + 30,amplitud);
+    ofDrawBitmapString(ofToString(-amplitud), lenghtOfAxis + 30 - 12,-amplitud -5);
+    ofDrawBitmapString(ofToString(amplitud), lenghtOfAxis + 30 - 3, amplitud + 15 );
     ofPoint sinPos = ofPoint(lenghtOfAxis + 30, dotPos.y);
-    ofDrawBitmapString("sin(a).r = " + ofToString( sin(angle),2) , sinPos + ofPoint(15,3));
     drawDot(sinPos);
+    
+    //  Draw cos of modulator
+    //
+    ofSetColor(255,100);
+    ofLine(-modRadio, lenghtOfAxis + 30, modRadio, lenghtOfAxis + 30);
+    ofDrawBitmapString("-"+ofToString(modRadio), -modRadio - 15, lenghtOfAxis + 30 + 5);
+    ofDrawBitmapString(ofToString(modRadio) + " Amp // Freq = " + ofToString(ofMap(mouseX,0,ofGetWidth(),0,10)) + "Hz", modRadio + 5, lenghtOfAxis + 30 + 5);
+    ofPoint cosPos = ofPoint( cos(modAngle)*modRadio ,  lenghtOfAxis + 30);
+    drawDot(cosPos);
+    cosPos = ofPoint( -cos(modAngle)*modRadio ,  lenghtOfAxis + 30);
+    drawDot(cosPos);
     
     //  Draw the history of sin throught time
     //
@@ -116,7 +140,6 @@ void testApp::draw(){
     
     for (int i = sinHistory.size() -1 ; i > 0 ; i--){
         float alpha = ofMap(i+1, 1,sinHistory.size(), 0.0,1.0);
-        
         lineMesh.addColor( ofFloatColor(1.0, alpha) );
         lineMesh.addVertex( ofPoint(lenghtOfAxis + 30 + (sinHistory.size()-i), sinHistory[i]) );
     }
@@ -135,7 +158,7 @@ void testApp::drawDot(ofPoint _pos){
     ofSetColor(255, 0,0);
     ofCircle(_pos, 5);
     
-    ofPopStyle();
+    ofPopStyle();  
 }
 
 //--------------------------------------------------------------
@@ -143,7 +166,7 @@ void testApp::keyPressed(int key){
     if (key == 'f'){
         ofToggleFullscreen();
     } else {
-        bPlay = !bPlay;
+        bFM = !bFM;
     }
 }
 
@@ -159,35 +182,6 @@ void testApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-    ofPoint mouse = ofPoint(x,y) - center;
-    
-    //  Get the angle of the mouse position
-    //
-    float angleToMouse = atan2( mouse.y, mouse.x );
-        
-    /* ATAN2 ( http://processing.org/reference/atan2_.html )
-     
-     Calculates the angle (in radians) from a specified point to the 
-     coordinate origin as measured from the positive x-axis. Values 
-     are returned as a float in the range from PI to -PI. The atan2() 
-     function is most often used for orienting geometry to the position 
-     of the cursor. Note: The y-coordinate of the point is the first 
-     parameter, and the x-coordinate is the second parameter, due the 
-     the structure of calculating the tangent.
-     
-     Syntax
-        atan2(y, x)
-     
-     Parameters
-        y	float: y-coordinate of the point
-        x	float: x-coordinate of the point
-     */
-    
-    if (angleToMouse < 0){
-        angle = PI + (PI + angleToMouse);
-    } else {
-        angle = angleToMouse;
-    }
 }
 
 //--------------------------------------------------------------
@@ -202,7 +196,7 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-    center.set(250,h*0.5);
+    center.y = h*0.5;
 }
 
 //--------------------------------------------------------------
