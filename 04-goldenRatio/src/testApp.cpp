@@ -8,7 +8,7 @@ void testApp::setup(){
     ofSetCircleResolution(60);
     ofSetDrawBitmapMode(OF_BITMAPMODE_SIMPLE );
     
-    phi = (1.0+sqrt(5.0))/2.0;
+    phi = (1.0+sqrtf(5.0))/2.0;
     cout << "This is fye the Greater "<< phi << endl;
     cout << "This is fee the Lesser "<< 1.0/phi << endl;
     
@@ -19,7 +19,6 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     mouse += ( ofPoint(mouseX,mouseY) - mouse)*0.1;
-
 }
 
 //--------------------------------------------------------------
@@ -28,8 +27,9 @@ void testApp::draw(){
     
     //  Line
     //
-    ofSetColor(255);
+    ofSetColor(200,0,0);
     ofCircle(center, 2);
+    ofSetColor(255);
     ofLine(center,mouse);
     
     //  Mouse to Polar
@@ -45,10 +45,12 @@ void testApp::draw(){
     //
     float a = dist.length()/phi;
     ofPoint A = ofPoint(a*cos(radian),a*sin(radian));
+    ofSetColor(200,0,0);
     ofCircle(A, 2);
     
     float b = dist.length()/pow(phi,2);
     ofPoint B = ofPoint(b*cos(radian),b*sin(radian));
+    ofSetColor(200,0,0);
     ofCircle(A+B, 2);
     
     //  2D: Make it a PLANE
@@ -62,30 +64,71 @@ void testApp::draw(){
     ofSetColor(255);
     ofDrawBitmapString("A", a*0.5, -5);
     ofDrawBitmapString("A", -15, a*0.5);
-    ofSetColor(100);
-    ofRect(0,0,a,a);
+    ofSetColor(255,150);
+    ofRect(0, 0, a, a);
     ofSetColor(255);
     ofDrawBitmapString("B", a+b*0.5, -5);
-    ofSetColor(100);
+    ofSetColor(255,150);
     ofRect(a,0,b,a);
+
+    //  Draw occult center
+    //
+    ofSetColor(255,100);
+    ofLine(0,0,a+b,a);
+    ofLine(a+b,0,a,a);
+    
+    //
+    //  Found Circle 
+//    ofPushMatrix();
+//    ofPushStyle();
+//    ofTranslate(a*0.5, a);
+//    ofSetColor(255,25);
+//    ofCircle(0,0, a*0.5+ (a/phi) );
+//    ofLine(0,0,a*0.5,-a);
+//    ofPopStyle();
+//    ofPopMatrix();
+    
+    //
+    //  Draw Spiral
+    drawSpiralArc(a);
+    drawSpiralArc(b);
+    drawSpiralArc(b/phi);
+    drawSpiralArc((b/phi)/phi);
+    drawSpiralArc(((b/phi)/phi)/phi);
+    drawSpiralArc((((b/phi)/phi)/phi)/phi);
+    drawSpiralArc(((((b/phi)/phi)/phi)/phi)/phi);
+    drawSpiralArc((((((b/phi)/phi)/phi)/phi)/phi)/phi);
+    drawSpiralArc(((((((b/phi)/phi)/phi)/phi)/phi)/phi)/phi);
+    
+    ofPopStyle();
+    ofPopMatrix();
+    
+    ofPopMatrix();
+    
+}
+
+void testApp::drawSpiralArc( double _size ){
+    ofRect(0,0,_size,_size);
     
     //
     //  Found ARC
     ofPushMatrix();
     ofPushStyle();
-    ofTranslate(a*0.5, a);
+    
+    ofTranslate(_size, _size);
+    ofRotate(-90, 0, 0, 1.0);
+    
+    ofPolyline arc;
+    arc.arc(0,0, _size, _size, -90, 0, 60);
+    
     ofSetColor(50);
-    ofCircle(0,0, a*0.5+b);
-    ofLine(0,0,a*0.5,-a);
-    ofPopStyle();
-    ofPopMatrix();
-    
+    arc.draw();
     
     ofPopStyle();
     ofPopMatrix();
     
-    
-    ofPopMatrix();
+    ofTranslate(_size+_size/phi, 0);
+    ofRotate(90, 0,0, 1.0);
     
 }
 

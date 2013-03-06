@@ -21,6 +21,8 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 	
+    void    drawSpiralArc( double _size );
+    
     ofPoint center;
     ofPoint mouse;
     
