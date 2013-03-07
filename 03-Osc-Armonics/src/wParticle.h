@@ -1,6 +1,5 @@
 //
 //  Particle.h
-//  week2_whitney
 //
 //  Created by Patricio Gonzalez Vivo on 9/20/12.
 //
@@ -21,8 +20,12 @@ public:
     void drawDot();
     void drawTrail(float _alpha);
     
+    ofSoundPlayer   sound;
+    
 private:
     vector <ofPoint> points;
+    
+    float   redValue;
 };
 
 

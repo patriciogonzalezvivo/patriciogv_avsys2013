@@ -14,9 +14,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "04-goldenRatio.app"
-               BlueprintName = "04-goldenRatio"
-               ReferencedContainer = "container:04-goldenRatio.xcodeproj">
+               BuildableName = "03-Osc-Armonics.app"
+               BlueprintName = "03-Osc-Armonics"
+               ReferencedContainer = "container:03-Osc-Armonics.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -25,16 +25,16 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.GDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
       <Testables>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "04-goldenRatio.app"
-            BlueprintName = "04-goldenRatio"
-            ReferencedContainer = "container:04-goldenRatio.xcodeproj">
+            BuildableName = "03-Osc-Armonics.app"
+            BlueprintName = "03-Osc-Armonics"
+            ReferencedContainer = "container:03-Osc-Armonics.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -43,16 +43,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.GDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "04-goldenRatio.app"
-            BlueprintName = "04-goldenRatio"
-            ReferencedContainer = "container:04-goldenRatio.xcodeproj">
+            BuildableName = "03-Osc-Armonics.app"
+            BlueprintName = "03-Osc-Armonics"
+            ReferencedContainer = "container:03-Osc-Armonics.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -62,23 +62,23 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "04-goldenRatio.app"
-            BlueprintName = "04-goldenRatio"
-            ReferencedContainer = "container:04-goldenRatio.xcodeproj">
+            BuildableName = "03-Osc-Armonics.app"
+            BlueprintName = "03-Osc-Armonics"
+            ReferencedContainer = "container:03-Osc-Armonics.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Release">
+      buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

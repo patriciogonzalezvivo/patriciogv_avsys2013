@@ -9,6 +9,10 @@ void testApp::setup(){
     
     for (int i = 0; i < TOTAL_PARTICLES; i++){
         wParticle newParticle;
+        
+        if ( i != 0){
+            newParticle.sound.loadSound("synth.wav");
+        }
         particles.push_back(newParticle);
     }
     
@@ -17,12 +21,11 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-    float xorig = 0;
-	float yorig = ofGetHeight()*0.5;
+	ofSoundUpdate();
     
 	for (int i = 0; i < particles.size(); i++){
-		float x = xorig + (ofGetWidth()/(particles.size()+1))*(i+1);
-		float y = yorig + (ofGetWidth()*0.25) * -sin( ofGetElapsedTimef() * (i / (float)(particles.size())) * speed );
+		float x = (ofGetWidth()/(particles.size()+1))*(i+1);
+		float y = (ofGetHeight()*0.25) * -sin( ofGetElapsedTimef() * (i / (float)(particles.size())) * speed );
 		
 		particles[i].moveTo(x,y);
 	}
@@ -32,7 +35,10 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofBackground(0);
+    ofBackgroundGradient(ofColor::gray,ofColor::black);
+    
+    ofPushMatrix();
+    ofTranslate(0, ofGetHeight()*0.5);
     
     float sinSwitcher = abs(sin(ofGetElapsedTimef()*0.1));
     
@@ -58,8 +64,11 @@ void testApp::draw(){
         particles[i].drawDot();
     }
     
+    ofPopMatrix();
+    
     ofSetColor(200);
-    ofDrawBitmapString(ofToString(ofGetElapsedTimef()*speed), 15,15);
+    ofDrawBitmapString( "Particles: " + ofToString(particles.size()) + " ( UP / DOWN )", 15,15);
+    ofDrawBitmapString( "Speed: " + ofToString(speed) + " ( LEFT / RIGHT )", 15,30);
 }
 
 void testApp::drawParticlesLine(float _alpha){
@@ -95,9 +104,10 @@ void testApp::keyPressed(int key){
             speed = 0;
     } else if ( key == OF_KEY_UP){
         wParticle newParticle;
+        newParticle.sound.loadSound("synth.wav");
         particles.push_back(newParticle);
     } else if ( key == OF_KEY_DOWN){
-        particles.erase(particles.begin());
+        particles.erase(particles.end()-1);
     }
 }
 

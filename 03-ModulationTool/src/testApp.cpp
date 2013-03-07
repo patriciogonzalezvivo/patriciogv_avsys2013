@@ -35,7 +35,7 @@ void testApp::update(){
         frequency = 1.0f;
         ofSetWindowTitle("AM");
     } else {
-        frequency = 1 + cos(modAngle)*5;
+        frequency = abs(1 + cos(modAngle)*5);
         amplitud = modRadio;
         ofSetWindowTitle("FM");
     }
@@ -66,7 +66,7 @@ void testApp::update(){
 void testApp::draw(){
     ofBackgroundGradient(ofColor::gray, ofColor::black);
     
-    ofDrawBitmapString("Switch between AM/FM", 15,15);
+    ofDrawBitmapString("Press any key to switch between AM/FM, and modulate by moving your mouse", 15,15);
     ofDrawBitmapString("Freq = " + ofToString(frequency) + "Hz ( App. at " + ofToString((float)ofGetFrameRate()) + "Hz )", 15,30);
     
     

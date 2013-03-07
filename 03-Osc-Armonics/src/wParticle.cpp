@@ -1,6 +1,5 @@
 //
 //  Particle.cpp
-//  week2_whitney
 //
 //  Created by Patricio Gonzalez Vivo on 9/20/12.
 //
@@ -9,7 +8,7 @@
 #include "wParticle.h"
 
 wParticle::wParticle(){
-    
+    redValue = 0.0;
 }
 
 void wParticle::moveTo(float _x, float _y){
@@ -29,12 +28,20 @@ void wParticle::drawDot(){
 	
 	ofFill();
     
-    float alpha = ofMap(abs(ofGetHeight()*0.5-y), 0, ofGetHeight()*0.25, 0.7, 0.0,true);
-    ofSetColor(ofFloatColor(1.0,0.0,0.0,alpha));
+    if (sound.isLoaded()){
+        if ( (distance( ofPoint(x,0) ) < 5) && (redValue < 0.2)){
+            sound.play();
+            redValue = 1.0;
+        }
+    }
+    
+    ofSetColor(ofFloatColor(1.0,0.0,0.0,redValue));
     ofCircle(x, y, 5);
     
     ofSetColor(255);
     ofCircle(x, y, 1);
+    
+    redValue -= 0.01;
 }
 
 void wParticle::drawTrail(float _alpha){

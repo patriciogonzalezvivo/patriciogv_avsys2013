@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "wParticle.h"
 
-#define TOTAL_PARTICLES 50
+#define TOTAL_PARTICLES 20
 
 class testApp : public ofBaseApp{
 public:

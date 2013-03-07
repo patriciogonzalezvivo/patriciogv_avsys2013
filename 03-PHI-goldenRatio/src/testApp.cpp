@@ -11,9 +11,7 @@ void testApp::setup(){
     phi = (1.0+sqrtf(5.0))/2.0;
     cout << "This is fye the Greater "<< phi << endl;
     cout << "This is fee the Lesser "<< 1.0/phi << endl;
-    
-    center.x = ofGetWidth()*0.5;
-    center.y = ofGetHeight()*0.5;
+
 }
 
 //--------------------------------------------------------------
@@ -23,7 +21,7 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofBackground(0);
+    ofBackgroundGradient(ofColor::gray, ofColor::black);
     
     //  Line
     //
@@ -90,15 +88,11 @@ void testApp::draw(){
     
     //
     //  Draw Spiral
-    drawSpiralArc(a);
-    drawSpiralArc(b);
-    drawSpiralArc(b/phi);
-    drawSpiralArc((b/phi)/phi);
-    drawSpiralArc(((b/phi)/phi)/phi);
-    drawSpiralArc((((b/phi)/phi)/phi)/phi);
-    drawSpiralArc(((((b/phi)/phi)/phi)/phi)/phi);
-    drawSpiralArc((((((b/phi)/phi)/phi)/phi)/phi)/phi);
-    drawSpiralArc(((((((b/phi)/phi)/phi)/phi)/phi)/phi)/phi);
+    float segment = a;
+    for (int i = 0; i < 10; i++) {
+        drawSpiralArc(segment);
+        segment /= phi;
+    }
     
     ofPopStyle();
     ofPopMatrix();
@@ -110,8 +104,6 @@ void testApp::draw(){
 void testApp::drawSpiralArc( double _size ){
     ofRect(0,0,_size,_size);
     
-    //
-    //  Found ARC
     ofPushMatrix();
     ofPushStyle();
     
@@ -134,6 +126,9 @@ void testApp::drawSpiralArc( double _size ){
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
+    if (key == 'f'){
+        ofToggleFullscreen();
+    }
 
 }
 
@@ -164,8 +159,8 @@ void testApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-    center.x = w*0.5;
-    center.y = h*0.5;
+    center.x = w*0.2;
+    center.y = h*0.2;
 }
 
 //--------------------------------------------------------------
