@@ -622,7 +622,7 @@
 				<key>isa</key>
 				<string>PBXNativeTarget</string>
 				<key>name</key>
-				<string>03-Osc-Armonics</string>
+				<string>03-Rythm-Harmonics</string>
 				<key>productName</key>
 				<string>myOFApp</string>
 				<key>productReference</key>
@@ -639,7 +639,7 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>path</key>
-				<string>03-Osc-ArmonicsDebug.app</string>
+				<string>03-Rythm-HarmonicsDebug.app</string>
 				<key>sourceTree</key>
 				<string>BUILT_PRODUCTS_DIR</string>
 			</dict>

@@ -3,6 +3,11 @@
 #include "ofMain.h"
 #include "wParticle.h"
 
+//  Watch:
+//          - http://www.youtube.com/watch?v=1M8ciWSgc_k&feature=youtu.be
+//          - https://vimeo.com/27336153
+//          - https://vimeo.com/28239261
+
 #define TOTAL_PARTICLES 20
 
 class testApp : public ofBaseApp{

@@ -33,12 +33,12 @@ void testApp::draw(){
     
     for(int i = 0; i < ofGetFrameNum() && i < 1000; i++ ){
         
-        float grow = i;
+        float grow = i + 1;
         
-        pos.x += i * cos(powf(phi,2)*TWO_PI*i);
-        pos.y += i * sin(powf(phi,2)*TWO_PI*i);
+        pos.x += grow * cos(powf(phi,2)*TWO_PI*grow);
+        pos.y += grow * sin(powf(phi,2)*TWO_PI*grow);
         
-        ofCircle(pos, grow*0.1);
+        ofCircle(pos, grow* 0.023);
     }
     
     ofPopMatrix();

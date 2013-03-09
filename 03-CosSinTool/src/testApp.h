@@ -2,6 +2,11 @@
 
 #include "ofMain.h"
 
+//  SIN / COS WAVE doc:
+//
+//                  http://en.wikipedia.org/wiki/Sine_wave
+//                  http://en.wikipedia.org/wiki/Waveform
+
 class testApp : public ofBaseApp{
 public:
     void setup();
