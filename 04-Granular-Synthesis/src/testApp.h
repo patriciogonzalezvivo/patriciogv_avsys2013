@@ -45,4 +45,5 @@ public:
 	int                 playbackPos;
     
     bool                bRecord;
+    bool                bShowGrain;
 };

@@ -8,11 +8,16 @@
 
 #include "Grain.h"
 
-void Grain::calcuteGrainSamples(int millis, unsigned long long startSample, float freq, float amplitude){
+Grain::Grain(){
+    start = 0;
+    sample = NULL;
+}
+
+void Grain::calcuteGrainSamples(int _millis, unsigned long long _startSample, float _freq, float _amplitude){
     
-	firstSample				= startSample;
-	lengthInMillis			= millis;
-	float lengthInSeconds	= millis / 1000.0f;
+	firstSample				= _startSample;
+	lengthInMillis			= _millis;
+	float lengthInSeconds	= _millis / 1000.0f;
 	lengthInSamples			= (int)(44100.0f * lengthInSeconds);
 	float phase				= ofRandom(0,TWO_PI);			// give a random phase
 	
@@ -20,7 +25,7 @@ void Grain::calcuteGrainSamples(int millis, unsigned long long startSample, floa
 	float sinProfileAngle		= 0;
 	float sinProfileAdder		= PI / (float)lengthInSamples;
 	float carrierAngle			= phase;
-	float carrierAngleAdder		= (freq / (float) 44100.0f) * TWO_PI;
+	float carrierAngleAdder		= (_freq / (float) 44100.0f) * TWO_PI;
 	
 	bAmReadyToBeErased = false;
 	
@@ -31,7 +36,10 @@ void Grain::calcuteGrainSamples(int millis, unsigned long long startSample, floa
         float mouseY = (float)ofGetMouseY()/(float)ofGetHeight();
         float pctWithOffset = (float)ofGetMouseX()/(float)ofGetWidth() + ofRandom( mouseY, -mouseY )*0.5;
         
-		int startPosition = (int)(pctWithOffset * sample->size()) - lengthInSamples/2;
+        freq    = carrierAngleAdder;
+        amp     = _amplitude;
+        start   = (int)(pctWithOffset * sample->size());
+		int startPosition =  start - lengthInSamples/2;
 		
 		for (int i = 0; i < lengthInSamples; i++){
 			
@@ -39,7 +47,7 @@ void Grain::calcuteGrainSamples(int millis, unsigned long long startSample, floa
 			while (samplePosition < 0) samplePosition += sample->size();
 			while (samplePosition >= sample->size() ) samplePosition -= sample->size();
 			
-			float s = sample->left[samplePosition] * amplitude * (sin(sinProfileAngle));
+			float s = sample->left[samplePosition] * _amplitude * (sin(sinProfileAngle));
 			grainSample.push_back(s);
 			carrierAngle	+= carrierAngleAdder;
 			sinProfileAngle += sinProfileAdder;
@@ -48,7 +56,7 @@ void Grain::calcuteGrainSamples(int millis, unsigned long long startSample, floa
 	} else {
 		
 		for (int i = 0; i < lengthInSamples; i++){
-			float s = sin(carrierAngle) * amplitude * (sin(sinProfileAngle));
+			float s = sin(carrierAngle) * _amplitude * (sin(sinProfileAngle));
 			grainSample.push_back(s);
 			carrierAngle	+= carrierAngleAdder;
 			sinProfileAngle += sinProfileAdder;

@@ -14,9 +14,14 @@
 
 class Grain {
 public:
+    Grain();
     
-    void calcuteGrainSamples(int millis, unsigned long long startSample, float freq, float amplitude);
+    void calcuteGrainSamples(int _millis, unsigned long long _startSample, float _freq, float _amplitude);
     float getSampleForPosition(unsigned long long samplePosition);
+    
+    int                     start;
+    float                   freq;
+    float                   amp;
     
     unsigned long long		firstSample;        // the time of the first sample, should be not an int
     int						lengthInSamples;

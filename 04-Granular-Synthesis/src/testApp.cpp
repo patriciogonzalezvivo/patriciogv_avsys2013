@@ -14,6 +14,7 @@ void testApp::setup(){
     //
     ofSoundStreamSetup(2,2,this, 44100, 512, 4);
     
+    bShowGrain = false;
     bRecord = false;
     playbackPos = 0;
     
@@ -22,7 +23,7 @@ void testApp::setup(){
 	grainCount			= 0;
 	
 	avgFrequency			= 400;
-	avgFrequencySpread		= 10;   // will go from 390-410
+	avgFrequencySpread		= 10;
 	avgGrainLength			= 80;
 	avgGrainLengthSpread	= 10;
 	avgVolume				= 0.17f;
@@ -48,13 +49,31 @@ void testApp::draw(){
     ofPopMatrix();
     
     if (!bRecord){
-        ofSetColor(255,0,0,50);
+        ofSetColor(255,0,0,20);
         ofRectangle rect;
         rect.setFromCenter(mouseX, ofGetHeight()*0.5, ((float)mouseY/(float)ofGetHeight())*ofGetWidth(), ofGetHeight());
         ofRect(rect);
         
         ofSetColor(255, 100);
         ofLine(mouseX,0,mouseX,ofGetHeight());
+        
+        //  If mouse press -> show grains sources
+        //
+        if ( bShowGrain ){
+            for (int i = 0; i < grains.size(); i++) {
+                if (!grains[i].bAmReadyToBeErased && sample.size() > 0){
+                    int start = grains[i].start%sample.size();
+                    float x = ( (float)start/(float)sample.size() ) * ofGetWidth();
+                    float w = ( (float)grains[i].lengthInSamples/(float)sample.size() * 0.1) * ofGetWidth();
+                    float h = ofGetHeight()*(grains[i].amp);
+                    ofFloatColor color = ofFloatColor(1.0,0,0,0.1);
+                    color.setHue(grains[i].freq);
+                    ofSetColor(color);
+                    ofRect(x-w*0.5, ofGetHeight()*0.5-h*0.5, w,h);
+                }
+                
+            }
+        }
     }
 
     ofSetColor(255);
@@ -71,6 +90,8 @@ void testApp::draw(){
 	ofDrawBitmapString("volumes between : " + ofToString(avgVolume - avgVolumeSpread, 3) + " - " + ofToString(avgVolume + avgVolumeSpread, 3), 30, 180);
 	
 	ofDrawBitmapString("grains per second  (j/m) : " + ofToString((int)(grainsPerSecond)), 30, 210);
+    
+    ofDrawBitmapString("Press ENTER to show/hide the grains sources", ofGetWidth()*0.5-150, ofGetHeight()-15);
 }
 
 //--------------------------------------------------------------
@@ -207,6 +228,9 @@ void testApp::keyPressed(int key){
             case 'm':
                 grainsPerSecond -= 1;
                 if (grainsPerSecond < 0) grainsPerSecond = 0;
+                break;
+            case OF_KEY_RETURN:
+                bShowGrain = !bShowGrain;
                 break;
         }
 }
