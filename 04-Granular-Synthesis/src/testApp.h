@@ -24,11 +24,25 @@ public:
     void audioIn(float * input, int bufferSize, int nChannels);
     void audioOut(float * input, int bufferSize, int nChannels);
     
-    ofSoundStream   soundStream;
-    Sample          sample;
+    void makeGrains(float * _output, int _bufferSize, int _nChannels);
     
-    float   grainPct;
-    float   grainPctOffSet;
+    ofSoundStream       soundStream;
+    Sample              sample;
     
-    bool    bRecord;
+    unsigned long long	sampleCount;
+	float				grainCount;
+	
+	vector <Grain>      grains;
+	
+	float				grainsPerSecond;
+	float				avgFrequency;
+	float				avgFrequencySpread;
+	float				avgGrainLength;
+	float				avgGrainLengthSpread;
+	float				avgVolume;
+	float				avgVolumeSpread;
+    
+	int                 playbackPos;
+    
+    bool                bRecord;
 };

@@ -10,24 +10,22 @@
 #define GRAIN
 
 #include "ofMain.h"
+#include "Sample.h"
 
 class Grain {
 public:
     
-    
     void calcuteGrainSamples(int millis, unsigned long long startSample, float freq, float amplitude);
+    float getSampleForPosition(unsigned long long samplePosition);
     
-    bool					bAmReadyToBeErased;
-    unsigned long long		firstSample;				// the time of the first sample, should be not an int
+    unsigned long long		firstSample;        // the time of the first sample, should be not an int
     int						lengthInSamples;
     float					lengthInMillis;
+    bool					bAmReadyToBeErased;
     
-    vector <float>			* gsamples;
+    Sample                  *sample;
     
-    float getSampleForPosition(unsigned long long samplePosition);
-	
-    vector <float>		samples;  // this is fairly inneficient.  better is preallocated arrays.
-    
+    vector <float>          grainSample;            // this is fairly inneficient.  better is preallocated arrays.
 };
 
 #endif

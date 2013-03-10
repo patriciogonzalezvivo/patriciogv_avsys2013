@@ -19,7 +19,7 @@ public:
     void    clear();
     
     void    rec(float * _input, int _bufferSize, int _nChannels);
-    void    ply(int _head, float * _output, int _bufferSize, int _nChannels);
+    void    ply(int &_head, float * _output, int _bufferSize, int _nChannels);
     
     void    update();
     

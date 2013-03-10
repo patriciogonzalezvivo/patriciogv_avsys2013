@@ -28,8 +28,12 @@ void Sample::rec(float *_input, int _bufferSize, int _nChannels){
     }
 }
 
-void Sample::ply(int _head, float *_output, int _bufferSize, int _nChannels){
-    if ( _head < left.size() ){
+void Sample::ply(int &_head, float *_output, int _bufferSize, int _nChannels){
+//    if ( _head < left.size() ){
+    if (left.size() > 0 ){
+        
+        _head = _head%left.size();
+        
         for (int i = 0; i < _bufferSize; i++){
             _output[i*_nChannels] = left[_head];
             _output[i*_nChannels + 1] = right[_head];
