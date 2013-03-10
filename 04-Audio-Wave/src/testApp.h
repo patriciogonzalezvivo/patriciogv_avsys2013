@@ -2,12 +2,6 @@
 
 #include "ofMain.h"
 
-//  Refences:
-//
-//                  http://en.wikipedia.org/wiki/Sine_wave
-//                  http://en.wikipedia.org/wiki/Waveform
-//                  http://video.mit.edu/watch/the-sounds-of-music-9042/
-
 class testApp : public ofBaseApp{
 public:
     void setup();
@@ -23,16 +17,18 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-
-    void drawDot(ofPoint _pos);
-
-    vector<float> sinHistory;
-
-    ofPoint center;
-    ofPoint dotPos;
-
-    float   angle;
-    float   radius;
-
-    bool    bPlay;
+    
+    void audioIn(float * input, int bufferSize, int nChannels);
+    void audioOut(float * input, int bufferSize, int nChannels);
+    
+    void updateSoundWave();
+    
+    ofSoundStream soundStream;
+		
+    vector <float> inLeft;
+    vector <float> inRight;
+    ofMesh  soundWave;
+    
+    int     margin, playerHead;
+    bool    bRecord;
 };

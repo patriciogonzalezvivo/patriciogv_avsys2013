@@ -2,7 +2,9 @@
 
 #include "ofMain.h"
 
-//  Check:
+//  References:
+//
+//          http://video.mit.edu/watch/the-sounds-of-music-9042/
 //          HARMONIC http://en.wikipedia.org/wiki/Harmonic
 //          FUNDAMENTAL NOTE http://en.wikipedia.org/wiki/Fundamental_tone
 
