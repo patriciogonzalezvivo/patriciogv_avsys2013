@@ -14,9 +14,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "04-Granular-Audio-Synthesis.app"
-               BlueprintName = "04-Granular-Audio-Synthesis"
-               ReferencedContainer = "container:04-Granular-Audio-Synthesis.xcodeproj">
+               BuildableName = "05-Granular-Image.app"
+               BlueprintName = "05-Granular-Image"
+               ReferencedContainer = "container:05-Granular-Image.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,9 +32,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "04-Granular-Audio-Synthesis.app"
-            BlueprintName = "04-Granular-Audio-Synthesis"
-            ReferencedContainer = "container:04-Granular-Audio-Synthesis.xcodeproj">
+            BuildableName = "05-Granular-Image.app"
+            BlueprintName = "05-Granular-Image"
+            ReferencedContainer = "container:05-Granular-Image.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -50,9 +50,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "04-Granular-Audio-Synthesis.app"
-            BlueprintName = "04-Granular-Audio-Synthesis"
-            ReferencedContainer = "container:04-Granular-Audio-Synthesis.xcodeproj">
+            BuildableName = "05-Granular-Image.app"
+            BlueprintName = "05-Granular-Image"
+            ReferencedContainer = "container:05-Granular-Image.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "04-Granular-Audio-Synthesis.app"
-            BlueprintName = "04-Granular-Audio-Synthesis"
-            ReferencedContainer = "container:04-Granular-Audio-Synthesis.xcodeproj">
+            BuildableName = "05-Granular-Image.app"
+            BlueprintName = "05-Granular-Image"
+            ReferencedContainer = "container:05-Granular-Image.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

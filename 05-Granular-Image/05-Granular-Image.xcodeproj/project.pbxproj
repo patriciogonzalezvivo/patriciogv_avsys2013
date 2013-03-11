@@ -9,80 +9,6 @@
 		<string>42</string>
 		<key>objects</key>
 		<dict>
-			<key>1a94bf2265da88b1bbee97292ef483b1</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Sample.h</string>
-				<key>path</key>
-				<string>src/Sample.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>723fc484e3fd2ffc88847deed9c1e13e</key>
-			<dict>
-				<key>fileRef</key>
-				<string>949b2e52cda9a1fd16b1d7157ddcd9f2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>949b2e52cda9a1fd16b1d7157ddcd9f2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Sample.cpp</string>
-				<key>path</key>
-				<string>src/Sample.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>19f25122d6f9bdfcfa8308f9e9c69fc5</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Grain.h</string>
-				<key>path</key>
-				<string>src/Grain.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>e3593d833f3268a0f2f58e98d6b261b8</key>
-			<dict>
-				<key>fileRef</key>
-				<string>1d538dc03dc88a7d014ccb9d1d6ddaf2</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>1d538dc03dc88a7d014ccb9d1d6ddaf2</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>Grain.cpp</string>
-				<key>path</key>
-				<string>src/Grain.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
 			<key>BB4B014C10F69532006C3DED</key>
 			<dict>
 				<key>children</key>
@@ -603,8 +529,6 @@
 				<array>
 					<string>E4B69E200A3A1BDC003C02F2</string>
 					<string>E4B69E210A3A1BDC003C02F2</string>
-					<string>e3593d833f3268a0f2f58e98d6b261b8</string>
-					<string>723fc484e3fd2ffc88847deed9c1e13e</string>
 				</array>
 				<key>isa</key>
 				<string>PBXSourcesBuildPhase</string>
@@ -660,7 +584,7 @@
 				<key>isa</key>
 				<string>PBXNativeTarget</string>
 				<key>name</key>
-				<string>04-Granular-Audio-Synthesis</string>
+				<string>05-Granular-Image</string>
 				<key>productName</key>
 				<string>myOFApp</string>
 				<key>productReference</key>
@@ -677,7 +601,7 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>path</key>
-				<string>04-Granular-Audio-SynthesisDebug.app</string>
+				<string>05-Granular-ImageDebug.app</string>
 				<key>sourceTree</key>
 				<string>BUILT_PRODUCTS_DIR</string>
 			</dict>
@@ -912,10 +836,6 @@
 					<string>E4B69E1D0A3A1BDC003C02F2</string>
 					<string>E4B69E1E0A3A1BDC003C02F2</string>
 					<string>E4B69E1F0A3A1BDC003C02F2</string>
-					<string>1d538dc03dc88a7d014ccb9d1d6ddaf2</string>
-					<string>19f25122d6f9bdfcfa8308f9e9c69fc5</string>
-					<string>949b2e52cda9a1fd16b1d7157ddcd9f2</string>
-					<string>1a94bf2265da88b1bbee97292ef483b1</string>
 				</array>
 				<key>isa</key>
 				<string>PBXGroup</string>
