@@ -98,7 +98,7 @@ void testApp::draw(){
     ofPushStyle();
     ofPushMatrix();
     ofTranslate(32, 0, 0);
-    ofSetColor(255, 20);
+    ofSetColor(255, 50);
     for (int i = 0; i < harmonics.size(); i++){
         ofLine(harmonics[i], 0, harmonics[i], ofGetHeight());
     }
