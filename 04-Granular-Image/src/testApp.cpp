@@ -39,9 +39,10 @@ void testApp::setup(){
                                       
                                       if ( abs(st.x - offset) < dispersion ){
                                           vec2 srcSt = vec2(mouse.x,st.y);
-                                          srcSt.x += dispersion * noise2f( vec2(st.x*time,st.y) * grainSize );
-                                          vec4 srcColor = texture2DRect(srcTexture,srcSt);
-                                          color = srcColor;// mix(color,srcColor, noise2f(st*mouse * grainSize) );
+                                          float noise = noise2f( vec2(st.x*time*0.3,st.y) * grainSize );
+                                          srcSt.x += dispersion * noise*2.0;
+                                          vec4 srcColor = texture2DRect(srcTexture, srcSt);
+                                          color = mix(color,srcColor, noise );
                                       }
                                       
                                       gl_FragColor = color;
@@ -60,7 +61,7 @@ void testApp::setup(){
     offset = 0;
     dispersion = 3.0;
     count = 0;
-    time = 0;
+    grainSize = 0.995;
 }
 
 //--------------------------------------------------------------
@@ -68,12 +69,6 @@ void testApp::update(){
     mouse.x = ofLerp(mouse.x, ofClamp(mouseX, 0, img.width), 0.1);
     mouse.y = ofLerp(mouse.y, ofClamp(mouseY, 0, ofGetHeight()), 0.01);
     dispersion = ofMap(mouse.y,0,img.height,0.0,img.width*0.25);
-    
-    time += 1.0/ofGetFrameRate();
-    while (time > ofGetFrameRate() ) {
-        time -= ofGetFrameRate();
-    }
-    
     
     offset += 0.5;
     while ( offset > fbo[0].getWidth() ){
@@ -85,8 +80,8 @@ void testApp::update(){
     
     shader.setUniform1f("offset", offset);
     shader.setUniform1f("dispersion", dispersion);
-    shader.setUniform1f("grainSize", mouse.y/ofGetHeight()*0.005f);
-    shader.setUniform1f("time",time);
+    shader.setUniform1f("grainSize", 1.0-grainSize);
+    shader.setUniform1f("time", ofGetElapsedTimef());
     shader.setUniform2f("mouse", mouse.x,mouse.y);
     shader.setUniformTexture("srcTexture", img.getTextureReference(), 1);
     shader.setUniformTexture("prevTexture", fbo[count%2].getTextureReference(), 0);
@@ -118,12 +113,19 @@ void testApp::draw(){
     ofRect(img.getWidth()+offset-dispersion, 0, dispersion*2.0, img.height);
     
     ofPopMatrix();
+    
+    ofSetColor(255);
+    ofDrawBitmapString("Grain Size: " + ofToString(grainSize,3), 15,15);
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
     if (key == 'f'){
         ofToggleFullscreen();
+    } else if ( key == OF_KEY_RIGHT){
+        grainSize += 0.01;
+    } else if ( key == OF_KEY_LEFT){
+        grainSize -= 0.01;
     }
 }
 

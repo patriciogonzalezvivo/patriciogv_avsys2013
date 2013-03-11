@@ -27,6 +27,7 @@ public:
     
     float       offset;
     float       dispersion;
-    float       time;
+    float       grainSize;
     int         count;
+    
 };
