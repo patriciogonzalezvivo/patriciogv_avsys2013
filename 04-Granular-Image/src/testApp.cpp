@@ -6,7 +6,7 @@ void testApp::setup(){
     ofEnableAlphaBlending();
     ofSetVerticalSync(true);
     
-    img.loadImage("test.jpg");
+    img.loadImage("test01.jpg");
     
     string fragShader = STRINGIFY(uniform sampler2DRect srcTexture;
                                   uniform sampler2DRect prevTexture;
