@@ -9,43 +9,6 @@
 		<string>42</string>
 		<key>objects</key>
 		<dict>
-			<key>a4cc96c984433068884d9d649171ba88</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.c.h</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>wParticle.h</string>
-				<key>path</key>
-				<string>src/wParticle.h</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
-			<key>424f1f54cca724fc98e74b38e689adc9</key>
-			<dict>
-				<key>fileRef</key>
-				<string>62daab76d0ab75f9f8d23e42a0745732</string>
-				<key>isa</key>
-				<string>PBXBuildFile</string>
-			</dict>
-			<key>62daab76d0ab75f9f8d23e42a0745732</key>
-			<dict>
-				<key>explicitFileType</key>
-				<string>sourcecode.cpp.cpp</string>
-				<key>fileEncoding</key>
-				<string>30</string>
-				<key>isa</key>
-				<string>PBXFileReference</string>
-				<key>name</key>
-				<string>wParticle.cpp</string>
-				<key>path</key>
-				<string>src/wParticle.cpp</string>
-				<key>sourceTree</key>
-				<string>SOURCE_ROOT</string>
-			</dict>
 			<key>BB4B014C10F69532006C3DED</key>
 			<dict>
 				<key>children</key>
@@ -566,7 +529,6 @@
 				<array>
 					<string>E4B69E200A3A1BDC003C02F2</string>
 					<string>E4B69E210A3A1BDC003C02F2</string>
-					<string>424f1f54cca724fc98e74b38e689adc9</string>
 				</array>
 				<key>isa</key>
 				<string>PBXSourcesBuildPhase</string>
@@ -622,7 +584,7 @@
 				<key>isa</key>
 				<string>PBXNativeTarget</string>
 				<key>name</key>
-				<string>03-Rythm-Harmonics</string>
+				<string>04-PHI-phyllotaxis</string>
 				<key>productName</key>
 				<string>myOFApp</string>
 				<key>productReference</key>
@@ -639,7 +601,7 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>path</key>
-				<string>03-Rythm-HarmonicsDebug.app</string>
+				<string>04-PHI-phyllotaxisDebug.app</string>
 				<key>sourceTree</key>
 				<string>BUILT_PRODUCTS_DIR</string>
 			</dict>
@@ -874,8 +836,6 @@
 					<string>E4B69E1D0A3A1BDC003C02F2</string>
 					<string>E4B69E1E0A3A1BDC003C02F2</string>
 					<string>E4B69E1F0A3A1BDC003C02F2</string>
-					<string>62daab76d0ab75f9f8d23e42a0745732</string>
-					<string>a4cc96c984433068884d9d649171ba88</string>
 				</array>
 				<key>isa</key>
 				<string>PBXGroup</string>
