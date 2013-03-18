@@ -3,7 +3,10 @@
 //--------------------------------------------------------------
 void testApp::setup(){
     ofSetVerticalSync(true);
+    ofEnableAlphaBlending();
+    ofEnableSmoothing();
     
+    pSensor.listDevices();
     pSensor.setup(0, 115200);
 }
 

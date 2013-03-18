@@ -40,7 +40,7 @@ void Grain::calcuteGrainSamples(int _millis, unsigned long long _startSample, fl
 		
 		for (int i = 0; i < lengthInSamples; i++){
 			
-			int samplePosition = startPosition + i;
+			int samplePosition = startPosition + i;// * ofMap(freq, 220.0, 880.0, 0.5, 1.5);
 			while (samplePosition < 0) samplePosition += sample->size();
 			while (samplePosition >= sample->size() ) samplePosition -= sample->size();
 			

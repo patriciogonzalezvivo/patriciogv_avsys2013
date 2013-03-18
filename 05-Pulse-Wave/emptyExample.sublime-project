@@ -1,0 +1,41 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/Patricio/Desktop/openFrameworks/apps/patriciogv_avsys2013/05-Pulse-Wave"
+		}
+	],
+	"settings":
+	{
+		"add_language_option": true,
+		"sublimeclang_enable_fast_completions": true,
+		"additional_language_options":
+		{
+			"c":
+			[
+			],
+			"c++":
+			[
+				"-std=c++11"
+			],
+			"objc":
+			[
+			],
+			"objc++":
+			[
+			]
+		},
+		"sublimeclang_enable_fast_completions": true,
+		"sublimeclang_options":
+		[
+			"-std=c++11",
+			"-Wno-deprecated-declarations",
+			"-Isystem",
+			"-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/usr/include/",
+			"-I/Users/Patricio/Desktop/openFrameworks/libs/**",
+            "-I../../../libs/**",           // this adds openFrameworks core  
+            "-I./src/**",                   // this adds local header files, if you happen to have some in a subdir of your local src directory  
+			"-I ../../../addons/**"
+		]
+	}
+}

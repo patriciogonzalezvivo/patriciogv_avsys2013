@@ -44,7 +44,7 @@ void testApp::update(){
     ofPoint pos = line.getPositionForTime(timeToCheck);
     
     head = pos.x;
-    headSize = 0.05;//(float)mouseY/(float)ofGetHeight();
+    headSize = 0.05;
     
     avgFrequency = ofMap(pos.y,0,ofGetHeight(),880.0,220.0); // Two octaves
     

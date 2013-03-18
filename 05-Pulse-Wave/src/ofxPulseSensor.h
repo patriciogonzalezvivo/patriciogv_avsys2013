@@ -16,32 +16,31 @@ struct PulseData{
     int     IBI;
     int     BPM;
     
-    float   normVal;
+    float   val;
     float   sec;
     
     bool    bGoodData;
 };
 
-class ofxPulseSensor {
+class ofxPulseSensor : public ofSerial {
 public:
     
-    ofxPulseSensor();
-    
-    void        setup(int _dev, int _baud);
     void        update();
+    
+    PulseData   getData( float _sec);
+    float       getVal( float _sec);
+    int         getBPM( float _sec);
+    int         getIBI( float _sec);
+    int         getSensor( float _sec);
     
     void        draw();
     
     int         Sensor;     // HOLDS PULSE SENSOR DATA FROM ARDUINO
-    int         IBI;        // HOLDS TIME BETWEN HEARTBEATS FROM ARDUINO
-    int         BPM;        // HOLDS HEART RATE VALUE FROM ARDUINO
-    
-    vector<float>   raw;
-    
+    int         IBI;        // http://en.wikipedia.org/wiki/Heart_rate
+    int         BPM;        // http://en.wikipedia.org/wiki/Interbeat_interval
+
 private:
+//    ofSerial            serial;
     vector<PulseData>   data;
-    ofSerial            serial;
-    
-    
 };
 #endif
