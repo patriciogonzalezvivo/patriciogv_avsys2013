@@ -24,7 +24,7 @@ public:
     void audioIn(float * input, int bufferSize, int nChannels);
     ofSoundStream soundStream;
     vector <float> inLeft;
-    vector <float> inRight;
+//    vector <float> inRight;
     float   volume;             // via RMS
     float   pitch;              // via zero crossings
     float   volumeSmoothSlow;   // via RMS
@@ -37,7 +37,7 @@ public:
     ofxGlow glow;
     ofxChromaAb chromaAb;
     ofMesh  mLeft;
-    ofMesh  mRight;
+//    ofMesh  mRight;
     float   audioMeshAlpha;
     int     width, height;
     int     nFaces;

@@ -22,13 +22,13 @@ void testApp::setup(){
     height = ofGetScreenHeight();
     glow.allocate(width, height);
     chromaAb.allocate(width, height);
-    nFaces = 1;
+    nFaces = 2;
     mLeft.setMode(OF_PRIMITIVE_LINE_STRIP);
-    mRight.setMode(OF_PRIMITIVE_LINE_STRIP);
+//    mRight.setMode(OF_PRIMITIVE_LINE_STRIP);
     audioMeshAlpha = 0.0;
     
     mLeft.clear();
-    mRight.clear();
+//    mRight.clear();
 }
 
 //--------------------------------------------------------------
@@ -39,7 +39,7 @@ void testApp::update(){
     
     ofSetColor(255);
     mLeft.draw();
-    mRight.draw();
+//    mRight.draw();
     
     ofSetColor( 255, 50 + ofMap(volume,0.1,0,50,255) );
     ofRect(-50, -50, 100, 100);
@@ -54,7 +54,7 @@ void testApp::update(){
     chromaAb.update();
     
     if (audioMeshAlpha < 1.0){
-        audioMeshAlpha = 1.0;//ofLerp(audioMeshAlpha, 1.0, 0.002);
+        audioMeshAlpha = ofLerp(audioMeshAlpha, 1.0, 0.0005);
     }
 }
 
@@ -120,8 +120,6 @@ void testApp::draw(){
         chromaAb.getTextureReference().unbind();
     }
     
-    ofSetColor(255);
-    ofDrawBitmapString(ofToString( chromaAb.offset  ), 15,15);
 }
 
 //--------------------------------------------------------------
@@ -149,7 +147,7 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
         //  Store Values
         //
         inLeft.push_back(   input[i*nChannels]*0.5  );
-        inRight.push_back(  input[i*nChannels+1]*0.5);
+//        inRight.push_back(  input[i*nChannels+1]*0.5);
     }
     
     //  Compute RMS
@@ -167,11 +165,11 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
     
     while (inLeft.size() > width*0.5) {
         inLeft.erase(inLeft.begin());
-        inRight.erase(inRight.begin());
+//        inRight.erase(inRight.begin());
     }
     
     mLeft.clear();
-    mRight.clear();
+//    mRight.clear();
     for (int i = 0; i < inLeft.size() ; i++){
         float x = ofMap(i, 0, inLeft.size(), -width*0.5, 0);
         float alpha = ofMap(i, 0, inLeft.size(), 0.0, 1.0) * audioMeshAlpha;
@@ -180,9 +178,9 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
         mLeft.addColor( ofFloatColor(1.0, alpha) );
         mLeft.addVertex(ofPoint(x, inLeft[i]*scale));
         
-        x = ofMap(i, inLeft.size(), 0, 0, width*0.5);
-        mRight.addColor( ofFloatColor(1.0, alpha) );
-        mRight.addVertex(ofPoint(x, inRight[i]*scale));
+//        x = ofMap(i, inLeft.size(), 0, 0, width*0.5);
+//        mRight.addColor( ofFloatColor(1.0, alpha) );
+//        mRight.addVertex(ofPoint(x, inLeft[i]*scale));
     }
 }
 
