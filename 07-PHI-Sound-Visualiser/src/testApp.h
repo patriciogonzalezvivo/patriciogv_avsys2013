@@ -19,14 +19,15 @@ public:
     void mouseReleased();
 		
     void audioReceived 	(float * input, int bufferSize, int nChannels);
-	ofPolyline  arc(float *values, int bufferSize,
-                    const ofPoint &center, float angleBegin, float angleEnd );
-    void createTerrain( int _scale );
+	ofPolyline  freqArc(float *_values, int _size, const ofPoint &_center, float _angleBegin, float _angleEnd, float _minRad , bool _bSmooth = false);
+    
+    void createSkin( int _width );
     
     ofEasyCam           cam;
     ofMesh              mesh;
     ofLight             light;
     vector<ofPoint>     points;
+    ofMatrix4x4         matrix;
     
     fft                 myFft;
     FFTOctaveAnalyzer   FFTanalyzer;

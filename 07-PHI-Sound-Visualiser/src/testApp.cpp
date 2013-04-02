@@ -28,32 +28,48 @@ void testApp::setup(){
 	FFTanalyzer.linearEQIntercept   = 0.9f;     // reduced gain at lowest frequency
 	FFTanalyzer.linearEQSlope       = 0.01f;    // increasing gain at higher frequencies
     
-    large = 500;
-    cam.setDistance(large*2);
+    large = 2000;
+//    cam.setDistance(large*2);
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     light.setPosition(ofVec3f(0,200,large*2.5));
     light.rotate(90, 1.0, 0.0, 0.0);
-//    light.setDiffuseColor(ofFloatColor(0.9,0.8,0.0));
-//    light.setAmbientColor(ofFloatColor(0.9,0.8,0.0));
-    
     
 }
 
 
 //--------------------------------------------------------------
 void testApp::update(){
+    
     //  Do the FFT
     //
     float avg_power = 0.0f;
 	myFft.powerSpectrum(0,(int)bufferSize/2, left, bufferSize, magnitude, phase, power, &avg_power);
-    
 	for (int i = 0; i < (int)(bufferSize/2); i++){
 		freq[i] = magnitude[i];
 	}
-	
     FFTanalyzer.calculate(freq);
     
-    createTerrain(5);
+    //  Make an Arc with the FFT
+    ofPolyline line = freqArc(FFTanalyzer.averages, FFTanalyzer.nAverages, ofPoint(0,0), PI-0.65, 0.0f+0.65,150-ofGetElapsedTimef()*5);
+    int lineWidth = line.size();
+    
+    //  Copy the points from the arc to the mesh
+    //
+    matrix.rotate(1.0, 1.0, 0.0, 0.0);
+    float s = 1.000;
+    matrix.scale(s,s,s);
+
+    for (int i = 0; i < lineWidth; i++){
+        points.push_back( matrix*(line[i]+ofPoint( (TWO_PI/ofGetElapsedTimef())*lineWidth*20,0.0,0.0)));
+    }
+    
+    //  Delete the excess of information
+    //
+    while(points.size()>lineWidth*large){
+        points.erase(points.begin());
+    }
+    
+    createSkin(lineWidth);
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
 }
@@ -63,69 +79,54 @@ void testApp::draw(){
     ofBackground(0);
     
 	ofSetColor(255);
-    //	for (int i = 0; i < (int)(bufferSize/2 - 1); i++){
-    //		ofRect(100+(i*4),300,4,-freq[i]*10.0f);
-    //	}
-    //
-    //	for (int i = 0; i < FFTanalyzer.nAverages; i++){
-    //        ofSetColor(255);
-    //		ofRect(100+(i*20),600,20,-FFTanalyzer.averages[i] * 6);
-    //        ofSetHexColor(0xff0000);
-    //        ofRect(100+(i*20),600-FFTanalyzer.peaks[i] * 6,20,-2);
-    //	}
     
     cam.begin();
     ofEnableLighting();
     light.enable();
     glEnable(GL_DEPTH_TEST);
+    
+    ofPushMatrix();
+    //ofTranslate(0.0, 0.0, -ofGetElapsedTimef()*500);
     mesh.drawFaces();
+    ofPopMatrix();
+    
     glDisable(GL_DEPTH_TEST);
     light.disable();
     ofDisableLighting();
-    
-    ofPushMatrix();
-    ofTranslate(0, 0, large*2.5 );
-    arc(FFTanalyzer.averages, FFTanalyzer.nAverages, ofPoint(0,0), PI-0.65, 0.0f+0.65).draw();
-    ofPopMatrix();
-    
     cam.end();
 }
 
 //--------------------------------------------------------------
-ofPolyline testApp::arc(float *values, int bufferSize, const ofPoint &center, float angleBegin, float angleEnd ){
+ofPolyline testApp::freqArc(float *_values, int _size, const ofPoint &_center, float _angleBegin, float _angleEnd, float _minRad,  bool _bSmooth){
+    
     ofPolyline line;
     
-    float angle = ofWrapRadians(angleBegin);
-    float step = (ofWrapRadians(angleEnd) - angle)/((float)bufferSize);
+    float angle = ofWrapRadians(_angleBegin);
+    float step = (ofWrapRadians(_angleEnd) - angle)/((float)_size);
     float scale = 1.0f;
-    float minRadio = 100;
     
-    ofPoint start = ofPoint(center.x + minRadio * cos(angle),
-                            center.y + minRadio * sin(angle));
-    ofPoint end = ofPoint(center.x + minRadio * cos(angleEnd),
-                          center.y + minRadio * sin(angleEnd));
+    ofPoint start = ofPoint(_center.x + _minRad * cos(angle),
+                            _center.y + _minRad * sin(angle));
+    ofPoint end = ofPoint(_center.x + _minRad * cos(_angleEnd),
+                          _center.y + _minRad * sin(_angleEnd));
     
     line.addVertex( start );
-    points.push_back(start);
-    
-    for (int i = 0; i < bufferSize; i++){
+    for (int i = 0; i < _size; i++){
         
-        float value = ofMap(values[i]*scale, 0.0, 60.0f, minRadio, minRadio+100.0f);
-        ofPoint p = center;
+        float value = ofMap(_values[i]*scale, 0.0, 60.0f, _minRad, _minRad*2);
+        ofPoint p = _center;
         p.x += value * cos(angle);
         p.y += value * sin(angle);
         angle += step;
         
-        line.curveTo( p );
-        points.push_back( p );
+        if (_bSmooth){
+            line.curveTo( p );
+        } else {
+            line.addVertex(p);
+        }
     }
     line.addVertex( end );
-    points.push_back( end );
     
-    while(points.size()>bufferSize*large){
-        points.erase(points.begin());
-    }
-
     return line;
 }
 
@@ -154,87 +155,24 @@ ofVec3f getVertexFromImg(ofFloatImage& img, int x, int y) {
 }
 
 //--------------------------------------------------------------
-void testApp::createTerrain( int _scale ){
+void testApp::createSkin(int _width){
 
-    int width = FFTanalyzer.nAverages+2;
+    int width = _width;
     int height = points.size() / width;
+    float scale = 5.0f;
     
     mesh.clear();
     for(int y = 0; y < height - 1; y ++) {
 		for(int x = 0; x < width - 1; x ++) {
             
-			ofVec3f nw = points[ x + y * width] + ofPoint(0.0,0.0, (-height*0.5 + y) * _scale);
-			ofVec3f ne = points[ (x+1) + y * width] + ofPoint(0.0,0.0, (-height*0.5 + y) * _scale);
-			ofVec3f sw = points[ x + (y+1) * width] + ofPoint(0.0,0.0, (-height*0.5 + y+1) * _scale);
-			ofVec3f se = points[ (x+1) + (y+1) * width] + ofPoint(0.0,0.0, (-height*0.5 + y+1) * _scale);
+			ofVec3f nw = points[ x + y * width];// + ofPoint(0.0,0.0, (-height*0.5 + y) * scale);
+			ofVec3f ne = points[ (x+1) + y * width];// + ofPoint(0.0,0.0, (-height*0.5 + y) * scale);
+			ofVec3f sw = points[ x + (y+1) * width];// + ofPoint(0.0,0.0, (-height*0.5 + y+1) * scale);
+			ofVec3f se = points[ (x+1) + (y+1) * width];// + ofPoint(0.0,0.0, (-height*0.5 + y+1) * scale);
 			
 			addFace(mesh, nw, ne, se, sw);
 		}
 	}
-    
-    /*
-    // Generate Vertex Field
-    //
-    int nVertexCount = (int) ( width * height * 6 );
-    
-    ofVec3f *pVertices      = new ofVec3f[nVertexCount];
-    ofVec3f *pNormals       = new ofVec3f[nVertexCount];
-    ofFloatColor *pColors   = new ofFloatColor[nVertexCount];
-    
-    int nIndex = 0;
-
-    for( int nY = 0; nY < height-1 ; nY ++ ){
-        for( int nX = 0; nX < width-1 ; nX++ ){
-            float flX, flY;
-            for( int nTri = 0; nTri < 6; nTri++ ){
-                
-                flX = (float) nX + ( ( nTri == 1 || nTri == 2 || nTri == 5 ) ? 1.0f : 0.0f );
-                flY = (float) nY + ( ( nTri == 2 || nTri == 4 || nTri == 5 ) ? 1.0f : 0.0f );
-                
-                int i = flY*(width) + flX;
-                
-                pVertices[nIndex].x = points[ i ].x;
-                pVertices[nIndex].y = points[ i ].y;
-                pVertices[nIndex].z = (-height*0.5 + flY) * _scale ;
-                
-                // 3	0 --- 1		nTri reference
-                // | \	  \	  |
-                // |   \	\ |
-                // 4 --- 5	  2
-                
-                //  Normals by vert
-                ofVec3f a,b,c;
-                ofVec3f normal;
-                
-                if ( nTri < 3 ){
-                    a = points[ (nX+1) + nY* width];    //  1
-                    b = points[ nX + nY* width];        //  0
-                    c = points[ (nX+1) + (nY+1)* width];//  2
-                } else {
-                    a = points[ nX + nY* width];         //  3
-                    b = points[ nX + (nY+1)* width];     //  4
-                    c = points[ (nX+1) + (nY+1)* width]; //  5
-                }
-                pNormals[nIndex] = ((b - a).cross(c - a)).normalize();
-                
-                //  Colors by vert
-                pColors[nIndex].set( ofMap(nY,0,height-1.0,0.1,1.0) );
-                
-                // Increment Our Index
-                nIndex++;
-            }
-        }
-    }
-        
-    mesh.clear();
-    mesh.addVertices(pVertices, nVertexCount);
-    mesh.addNormals(pNormals, nVertexCount);
-    mesh.addColors(pColors, nVertexCount);
-    
-    delete [] pVertices; pVertices = NULL;
-    delete [] pNormals; pNormals = NULL;
-    delete [] pColors; pColors = NULL;
-    */
 }
 
 //--------------------------------------------------------------
