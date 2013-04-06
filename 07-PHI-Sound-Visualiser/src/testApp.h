@@ -25,7 +25,8 @@ public:
     
     ofEasyCam           cam;
     ofMesh              mesh;
-    ofLight             light;
+    ofLight             coldLight;
+    ofLight             warmLight;
     vector<ofPoint>     points;
     ofMatrix4x4         matrix;
     
@@ -33,6 +34,10 @@ public:
     FFTOctaveAnalyzer   FFTanalyzer;
     int                 bufferSize;
     int                 large;
+    
+    float               angle;
+    float               radio;
+    ofPoint             offSet;
     
     float               *left;
     float               *right;

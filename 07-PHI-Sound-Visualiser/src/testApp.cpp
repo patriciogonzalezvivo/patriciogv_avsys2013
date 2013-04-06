@@ -28,12 +28,21 @@ void testApp::setup(){
 	FFTanalyzer.linearEQIntercept   = 0.9f;     // reduced gain at lowest frequency
 	FFTanalyzer.linearEQSlope       = 0.01f;    // increasing gain at higher frequencies
     
-    large = 2000;
-//    cam.setDistance(large*2);
+    large = 1000;
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
-    light.setPosition(ofVec3f(0,200,large*2.5));
-    light.rotate(90, 1.0, 0.0, 0.0);
     
+    coldLight.setPosition(ofVec3f(-20,-200,-large*2.5));
+    coldLight.rotate(90+45, 1.0, 0.0, 0.0);
+    coldLight.setDiffuseColor(ofFloatColor(0.1,0.1,0.2));
+    coldLight.setSpotConcentration(0.001);
+    
+    warmLight.setPosition(ofVec3f(20,200, large*2.5));
+    warmLight.rotate(45, 1.0, 0.0, 0.0);
+    warmLight.setDiffuseColor(ofFloatColor(0.7,0.7,0.35));
+    warmLight.setSpecularColor(ofFloatColor(0.2,0.2,0.1));
+    
+    angle = 0.0;
+    radio = 1.0;
 }
 
 
@@ -49,18 +58,31 @@ void testApp::update(){
 	}
     FFTanalyzer.calculate(freq);
     
+    float phi   = (1.0+sqrtf(5.0))/2.0;
+    float grow  = (1.0+phi);
+    
+    float stepAngle = (TWO_PI/ofGetFrameRate());
+    float stepGrow = grow/ofGetFrameRate();
+    
+    angle += stepAngle*0.001;
+    radio += (radio*stepGrow)*0.1;
+    
+    float size = radio*grow;
+    cam.setDistance(10+radio*3);
+    
+    offSet = ofPoint(radio*(1.0+phi),-(size*0.5));
+    
     //  Make an Arc with the FFT
-    ofPolyline line = freqArc(FFTanalyzer.averages, FFTanalyzer.nAverages, ofPoint(0,0), PI-0.65, 0.0f+0.65,150-ofGetElapsedTimef()*5);
+    //
+    ofPolyline line = freqArc(FFTanalyzer.averages, FFTanalyzer.nAverages, offSet, PI-0.65, 0.0f+0.65, size);
     int lineWidth = line.size();
     
     //  Copy the points from the arc to the mesh
     //
-    matrix.rotate(1.0, 1.0, 0.0, 0.0);
-    float s = 1.000;
-    matrix.scale(s,s,s);
+    matrix.rotate(1.0, ofRadToDeg(angle), 0.0, 0.0);
 
     for (int i = 0; i < lineWidth; i++){
-        points.push_back( matrix*(line[i]+ofPoint( (TWO_PI/ofGetElapsedTimef())*lineWidth*20,0.0,0.0)));
+        points.push_back( matrix*line[i] );
     }
     
     //  Delete the excess of information
@@ -76,22 +98,30 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofBackground(0);
+    ofBackgroundGradient(ofColor::gray, ofColor::black);
     
 	ofSetColor(255);
     
     cam.begin();
     ofEnableLighting();
-    light.enable();
+    coldLight.enable();
+    warmLight.enable();
+    
     glEnable(GL_DEPTH_TEST);
     
     ofPushMatrix();
-    //ofTranslate(0.0, 0.0, -ofGetElapsedTimef()*500);
+    
+    ofTranslate(0,offSet.x*0.5);
+    ofRotate(-90, 0, 0, 1);
+    
+    ofSetColor(255,250,240);
     mesh.drawFaces();
     ofPopMatrix();
     
     glDisable(GL_DEPTH_TEST);
-    light.disable();
+    
+    coldLight.disable();
+    warmLight.disable();
     ofDisableLighting();
     cam.end();
 }
@@ -188,7 +218,9 @@ void testApp::audioReceived (float * input, int bufferSize, int nChannels){
 
 //--------------------------------------------------------------
 void testApp::keyPressed  (int key){ 
-	
+	if (key == 'f'){
+        ofToggleFullscreen();
+    }
 }
 
 //--------------------------------------------------------------
