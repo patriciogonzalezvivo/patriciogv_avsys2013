@@ -28,21 +28,21 @@ void testApp::setup(){
 	FFTanalyzer.linearEQIntercept   = 0.9f;     // reduced gain at lowest frequency
 	FFTanalyzer.linearEQSlope       = 0.01f;    // increasing gain at higher frequencies
     
-    large = 1000;
+    large = 1200;
     mesh.setMode(OF_PRIMITIVE_TRIANGLES);
     
-    coldLight.setPosition(ofVec3f(-20,-200,-large*2.5));
-    coldLight.rotate(90+45, 1.0, 0.0, 0.0);
-    coldLight.setDiffuseColor(ofFloatColor(0.1,0.1,0.2));
-    coldLight.setSpotConcentration(0.001);
+    cam.setOrientation(ofVec3f(52.5306, 58.7509, -16.9383));
     
-    warmLight.setPosition(ofVec3f(20,200, large*2.5));
+    coldLight.setPosition(ofVec3f(0,500,-large*100));
+    coldLight.rotate(90, 1.0, 0.0, 0.0);
+    coldLight.setDiffuseColor(ofFloatColor(0.07,0.01,0.01));
+    coldLight.setDirectional();
+    
+    warmLight.setPosition(ofVec3f(-100,500,-large));
     warmLight.rotate(45, 1.0, 0.0, 0.0);
+    warmLight.setDirectional();
     warmLight.setDiffuseColor(ofFloatColor(0.7,0.7,0.35));
-    warmLight.setSpecularColor(ofFloatColor(0.2,0.2,0.1));
     
-    angle = 0.0;
-    radio = 1.0;
 }
 
 
@@ -58,39 +58,49 @@ void testApp::update(){
 	}
     FFTanalyzer.calculate(freq);
     
+    
+    vector<float> newAverage;
+    newAverage.assign(FFTanalyzer.averages,FFTanalyzer.averages+18);
+    averages.push_back( newAverage );
+    
+    while(averages.size()>large){
+        averages.erase(averages.begin());
+    }
+    
     float phi   = (1.0+sqrtf(5.0))/2.0;
     float grow  = (1.0+phi);
+    float stepAngle = TWO_PI*0.1;
+    float stepGrow = grow*0.001;
     
-    float stepAngle = (TWO_PI/ofGetFrameRate());
-    float stepGrow = grow/ofGetFrameRate();
+    float angle = 0.0;
+    float radio = 1.0;
+    offSet = ofPoint(0,0);
     
-    angle += stepAngle*0.001;
-    radio += (radio*stepGrow)*0.1;
+    int lineWidth;
+    points.clear();
+    ofMatrix4x4 matrix;
     
-    float size = radio*grow;
-    cam.setDistance(10+radio*3);
-    
-    offSet = ofPoint(radio*(1.0+phi),-(size*0.5));
-    
-    //  Make an Arc with the FFT
-    //
-    ofPolyline line = freqArc(FFTanalyzer.averages, FFTanalyzer.nAverages, offSet, PI-0.65, 0.0f+0.65, size);
-    int lineWidth = line.size();
-    
-    //  Copy the points from the arc to the mesh
-    //
-    matrix.rotate(1.0, ofRadToDeg(angle), 0.0, 0.0);
-
-    for (int i = 0; i < lineWidth; i++){
-        points.push_back( matrix*line[i] );
+    for (int i = 0; i < averages.size(); i++){
+        angle += stepAngle;
+        radio += radio*stepGrow;
+        
+        float size = radio*grow;
+        
+        offSet = ofPoint(size,size*-0.5);
+        
+        ofPolyline line = freqArc( averages[i], offSet, PI-0.65, 0.0f+0.65, size );
+        line = line.getSmoothed(2);
+        lineWidth = line.size();
+        
+        matrix.rotate(1.0, ofRadToDeg(angle), 0.0, 0.0);
+        
+        for (int j = 0; j < lineWidth; j++){
+            points.push_back( matrix*line[j] );
+        }
     }
     
-    //  Delete the excess of information
-    //
-    while(points.size()>lineWidth*large){
-        points.erase(points.begin());
-    }
-    
+    cam.setDistance(offSet.x*2.0);
+    cout << cam.getOrientationEuler() << endl;
     createSkin(lineWidth);
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
@@ -98,7 +108,8 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofBackgroundGradient(ofColor::gray, ofColor::black);
+//    ofBackgroundGradient(ofColor::gray, ofColor::black);
+    ofBackground(0);
     
 	ofSetColor(255);
     
@@ -111,7 +122,7 @@ void testApp::draw(){
     
     ofPushMatrix();
     
-    ofTranslate(0,offSet.x*0.5);
+    ofTranslate(0,offSet.x*0.7);
     ofRotate(-90, 0, 0, 1);
     
     ofSetColor(255,250,240);
@@ -127,12 +138,12 @@ void testApp::draw(){
 }
 
 //--------------------------------------------------------------
-ofPolyline testApp::freqArc(float *_values, int _size, const ofPoint &_center, float _angleBegin, float _angleEnd, float _minRad,  bool _bSmooth){
+ofPolyline testApp::freqArc( vector<float> &_vector, const ofPoint &_center, float _angleBegin, float _angleEnd, float _minRad,  bool _bSmooth){
     
     ofPolyline line;
     
     float angle = ofWrapRadians(_angleBegin);
-    float step = (ofWrapRadians(_angleEnd) - angle)/((float)_size);
+    float step = (ofWrapRadians(_angleEnd) - angle)/((float)_vector.size());
     float scale = 1.0f;
     
     ofPoint start = ofPoint(_center.x + _minRad * cos(angle),
@@ -141,9 +152,9 @@ ofPolyline testApp::freqArc(float *_values, int _size, const ofPoint &_center, f
                           _center.y + _minRad * sin(_angleEnd));
     
     line.addVertex( start );
-    for (int i = 0; i < _size; i++){
+    for (int i = 0; i < _vector.size(); i++){
         
-        float value = ofMap(_values[i]*scale, 0.0, 60.0f, _minRad, _minRad*2);
+        float value = ofMap(_vector[i]*scale, 0.0, 60.0f, _minRad, _minRad*2);
         ofPoint p = _center;
         p.x += value * cos(angle);
         p.y += value * sin(angle);
@@ -195,10 +206,10 @@ void testApp::createSkin(int _width){
     for(int y = 0; y < height - 1; y ++) {
 		for(int x = 0; x < width - 1; x ++) {
             
-			ofVec3f nw = points[ x + y * width];// + ofPoint(0.0,0.0, (-height*0.5 + y) * scale);
-			ofVec3f ne = points[ (x+1) + y * width];// + ofPoint(0.0,0.0, (-height*0.5 + y) * scale);
-			ofVec3f sw = points[ x + (y+1) * width];// + ofPoint(0.0,0.0, (-height*0.5 + y+1) * scale);
-			ofVec3f se = points[ (x+1) + (y+1) * width];// + ofPoint(0.0,0.0, (-height*0.5 + y+1) * scale);
+			ofVec3f nw = points[ x + y * width];
+			ofVec3f ne = points[ (x+1) + y * width];
+			ofVec3f sw = points[ x + (y+1) * width];
+			ofVec3f se = points[ (x+1) + (y+1) * width];
 			
 			addFace(mesh, nw, ne, se, sw);
 		}
@@ -220,6 +231,8 @@ void testApp::audioReceived (float * input, int bufferSize, int nChannels){
 void testApp::keyPressed  (int key){ 
 	if (key == 'f'){
         ofToggleFullscreen();
+    } else if ( key == ' '){
+        averages.clear();
     }
 }
 

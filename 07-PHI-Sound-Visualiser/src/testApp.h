@@ -19,7 +19,7 @@ public:
     void mouseReleased();
 		
     void audioReceived 	(float * input, int bufferSize, int nChannels);
-	ofPolyline  freqArc(float *_values, int _size, const ofPoint &_center, float _angleBegin, float _angleEnd, float _minRad , bool _bSmooth = false);
+	ofPolyline  freqArc( vector<float> &_vector, const ofPoint &_center, float _angleBegin, float _angleEnd, float _minRad , bool _bSmooth = false);
     
     void createSkin( int _width );
     
@@ -27,17 +27,15 @@ public:
     ofMesh              mesh;
     ofLight             coldLight;
     ofLight             warmLight;
+    vector< vector<float> >   averages;
     vector<ofPoint>     points;
-    ofMatrix4x4         matrix;
+    
+    ofPoint             offSet;
     
     fft                 myFft;
     FFTOctaveAnalyzer   FFTanalyzer;
     int                 bufferSize;
     int                 large;
-    
-    float               angle;
-    float               radio;
-    ofPoint             offSet;
     
     float               *left;
     float               *right;
