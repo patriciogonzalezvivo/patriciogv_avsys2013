@@ -9,7 +9,11 @@ void testApp::setup(){
     bCursor = true;
     ofHideCursor();
     
+    //  Nothing selected
+    //
+    nBookmark = -1;
     nSelected = -1;
+    
     lineStroke = 1;
     
     loadSecuence("test.xml");
@@ -46,11 +50,6 @@ void testApp::draw(){
         ofPushStyle();
         ofSetColor(255,0,0);
         ofDrawBitmapString("DRAG me MUSIC", ofGetWidth()*0.5-50, ofGetHeight()*0.5-4);
-//        ofNoFill();
-//        float w = 160;
-//        float h = w*((1.0+sqrtf(5.0))/2.0-1.0);
-//        ofRectRounded(ofGetWidth()*0.5-w*0.5, ofGetHeight()*0.5-h*0.5, w, h, 1);
-//        ofPopStyle();
     }
     
     //  TIME LINE
@@ -102,6 +101,9 @@ void testApp::keyPressed(int key){
         if (nSelected != -1){
             storedLines.erase(storedLines.begin()+nSelected);
             nSelected = -1;
+        } else if (nBookmark != -1){
+            player.bookmarks.erase(player.bookmarks.begin()+nBookmark);
+            nBookmark = -1;
         }
     } else if (key == 's'){
         saveSecuence("secuence-"+ofGetTimestampString()+".xml");
@@ -109,8 +111,14 @@ void testApp::keyPressed(int key){
         if (!bPDF)
             bPDF = true;
     } else if (key == 'c'){
+        if ((storedLines.size() == 0) && (actualLine.size() <= 2))
+            player.bookmarks.clear();
+            
         storedLines.clear();
         actualLine.clear();
+    } else if (key == 'v'){
+        player.bookmarks.clear();
+        
     } else if (key == 'b'){
         if (player.getIsPlaying())
             player.addBookmark();
@@ -145,24 +153,27 @@ void testApp::mouseDragged(int x, int y, int button){
         //  If it was draing, finish the line
         //
         if (actualLine.size() > 1){
-            cout << actualLine.size() << endl;
             actualLine.setFinish();
             storedLines.push_back(actualLine);
             actualLine.clear();
-            cout << "clear and push" << endl;
         }
         
         //  If there is a selected refBox, move it
         //
         if (nSelected != -1){
             storedLines[nSelected].moveRefTo(x-selectOffSet.x,y-selectOffSet.y);
-        } else
-        
+        }
+        //  If a bookmark is selected
+        //
+        else if (nBookmark != -1){
+            player.bookmarks[nBookmark] = (float)x/(float)ofGetWidth();
+        }
         //  If it's nothing selected, just move the header of the player
         //
-        {
+        else {
             player.setPosition((float)x/ofGetWidth());
             nSelected = -1;
+            nBookmark = -1;
         }
         
     } else {
@@ -179,6 +190,7 @@ void testApp::mousePressed(int x, int y, int button){
     //  Any new click could be de start of new gesture
     //
     nSelected = -1;
+    nBookmark = -1;
     
     if (player.inside(x, y)){
         
@@ -190,6 +202,18 @@ void testApp::mousePressed(int x, int y, int button){
                 selectOffSet.x = x - storedLines[i].getReferenceBox().x;
                 selectOffSet.y = y - storedLines[i].getReferenceBox().y;
                 break;
+            }
+        }
+        
+        //  If no reference box is selected try with a bookmark
+        //
+        if (nSelected == -1){
+            for (int i = 0; i < player.bookmarks.size(); i++){
+                int mark= player.bookmarks[i] * ofGetWidth();
+                if ( x > mark-5 && x < mark+5 ){
+                    nBookmark = i;
+                    break;
+                }
             }
         }
         
@@ -271,9 +295,10 @@ bool testApp::loadSecuence(string _file){
                     
                     XML.popTag();
                 }
-                int totalBookmark = XML.getNumTags("bookmarks");
+                
+                int totalBookmark = XML.getNumTags("bookmark");
                 for (int i = 0; i < totalBookmark; i++) {
-                    player.bookmarks.push_back(XML.getValue("bookmarks", 0.0, i));
+                    player.bookmarks.push_back(XML.getValue("bookmark", 0.0, i));
                 }
             }
         }

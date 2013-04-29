@@ -36,6 +36,7 @@ public:
     ofPoint         selectOffSet;
     float           lineStroke;
     int             nSelected;
+    int             nBookmark;
     bool            bCursor;
     bool            bLoaded;
     bool            bPDF;
