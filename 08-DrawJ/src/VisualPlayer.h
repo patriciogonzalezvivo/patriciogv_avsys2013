@@ -9,6 +9,9 @@
 #ifndef VISUAL_PLAYER
 #define VISUAL_PLAYER
 
+#define MARK_SIZE 6.0
+#define TIMELINE_HEIGHT 60.0
+
 #include "ofMain.h"
 
 class VisualPlayer : public ofSoundPlayer {
@@ -35,7 +38,7 @@ public:
     int     height;
     
 private:
-    void    drawMark(float _pct, bool _showSec);
+    void    drawMark(float _pct, bool _showSec, bool _showArrow);
     float   lastTime;
     float   lenght;
     float   pct;

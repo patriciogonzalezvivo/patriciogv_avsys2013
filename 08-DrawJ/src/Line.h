@@ -9,10 +9,13 @@
 #ifndef TIMELINE
 #define TIMELINE
 
+#define MAX_LINE_WIDTH 4.0
+#define REFERENCEBOX_HEIGHT 15.0
+
 #include "ofMain.h"
 #include "VisualPlayer.h"
 
-#define MAX_LINE_WIDTH 4.0
+//#define MAX_LINE_WIDTH 4.0
 
 class TimePoint : public ofPoint {
 public:

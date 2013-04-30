@@ -56,6 +56,19 @@ void testApp::draw(){
     //
     player.draw();
     
+    //  Current lineStroke
+    //
+    ofPushMatrix();
+    ofSetColor(255,0,0,50);
+    ofTranslate(0, ofGetHeight() - player.height);
+    float strokeY = ofMap(lineStroke, 0.0,MAX_LINE_WIDTH, player.height*0.9-REFERENCEBOX_HEIGHT*0.5,player.height*0.1+REFERENCEBOX_HEIGHT*0.5);
+    ofBeginShape();
+    ofVertex(0, strokeY-MARK_SIZE);ofVertex(0, strokeY+MARK_SIZE);ofVertex(MARK_SIZE, strokeY);
+    ofEndShape();
+    ofLine(MARK_SIZE, strokeY, ofGetWidth(), strokeY);
+
+    ofPopMatrix();
+    
     if (bPDF){
         ofBackground(255);
         ofBeginSaveScreenAsPDF("screenshot-"+ofGetTimestampString()+".pdf", false);
@@ -70,9 +83,18 @@ void testApp::draw(){
     ofSetColor(180);
     float time = player.getPosition()*player.getLength();
     for (int i = 0; i < storedLines.size(); i++){
-        if (bPDF) ofSetColor(0);
-        else if ( i == nSelected) ofSetColor(255,0,0);
-        else ofSetColor(255);
+        
+        storedLines[i].bSelected = false;
+        
+        if (bPDF){
+            ofSetColor(0);
+        } else if ( i == nSelected){
+            ofSetColor(255,0,0);
+            storedLines[i].bSelected = true;
+        } else {
+            ofSetColor(255);
+        }
+        
         storedLines[i].draw( time , bPDF );
     }
 
@@ -168,6 +190,24 @@ void testApp::mouseDragged(int x, int y, int button){
         else if (nBookmark != -1){
             player.bookmarks[nBookmark] = (float)x/(float)ofGetWidth();
         }
+        //  What about LINE STROKE
+        //
+        else if ( x < MARK_SIZE*2.0 ){
+            float strokeY = ofMap(lineStroke,
+                                  0.0,MAX_LINE_WIDTH,
+                                  player.height*0.9-REFERENCEBOX_HEIGHT*0.5,
+                                  player.height*0.1+REFERENCEBOX_HEIGHT*0.5);
+            float mY = y - (ofGetHeight()-player.height);
+            if ( abs(strokeY - mY) < MARK_SIZE*2.0 ){
+                lineStroke = ofMap(mY,
+                                   player.height*0.9-REFERENCEBOX_HEIGHT*0.5,
+                                   player.height*0.1+REFERENCEBOX_HEIGHT*0.5,
+                                   0.0,
+                                   MAX_LINE_WIDTH,
+                                   true);
+                actualLine.stroke = lineStroke;
+            }
+        }
         //  If it's nothing selected, just move the header of the player
         //
         else {
@@ -215,7 +255,7 @@ void testApp::mousePressed(int x, int y, int button){
                     break;
                 }
             }
-        }
+        } 
         
     } else {
         

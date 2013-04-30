@@ -9,7 +9,7 @@
 #include "VisualPlayer.h"
 
 VisualPlayer::VisualPlayer(){
-    height = 60;
+    height = TIMELINE_HEIGHT;
     bPlay = false;
     lastTime = -1;
 }
@@ -17,15 +17,16 @@ VisualPlayer::VisualPlayer(){
 bool VisualPlayer::loadSound(string _file){
     bool _loaded = ofSoundPlayer::loadSound(_file, false);
 
-    bookmarks.clear();
+    
     ofSoundPlayer::play();
     setPosition(0.999999);
     lenght = getPositionMS()*0.001;
     setPosition(0.0);
     ofSoundPlayer::stop();
+    
     pct = 0.0;
     bPlay = false;
-    
+    bookmarks.clear();
     return _loaded;
 }
 
@@ -93,27 +94,30 @@ void VisualPlayer::draw(){
     //  Header
     //
     ofSetColor(255, 0,0);
-    drawMark(getPosition(),true);
+    drawMark(getPosition(),true,false);
     
     //  Bookmarks
     //
     ofSetColor(255,0,0,100);
     for(int i = 0; i < bookmarks.size(); i++){
-        drawMark(bookmarks[i],false);
+        drawMark(bookmarks[i],false,true);
     }
     
     ofPopMatrix();
     ofPopStyle();
 }
 
-void VisualPlayer::drawMark(float _pct, bool _showSec){
+void VisualPlayer::drawMark(float _pct, bool _showSec, bool _showArrow){
     float pos = _pct * (float)ofGetWidth();
-    float size = 5;
-    ofBeginShape();
-    ofVertex(pos-size,0);
-    ofVertex(pos+size,0);
-    ofVertex(pos,size);
-    ofEndShape();
+    float size = 0;
+    if (_showArrow){
+        size = MARK_SIZE;
+        ofBeginShape();
+        ofVertex(pos-size,0);
+        ofVertex(pos+size,0);
+        ofVertex(pos,size);
+        ofEndShape();
+    }
     ofLine(pos, size, pos, height);
     
     if (_showSec)

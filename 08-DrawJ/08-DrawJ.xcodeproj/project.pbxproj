@@ -233,10 +233,10 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
-				e26359b3f76db6c94af4c6921ec610ec /* Line.cpp */,
 				721f0401ad0b6dc50a6068a7197b92d0 /* Line.h */,
-				160c800a2921eba76fb218396a1d48c6 /* VisualPlayer.cpp */,
+				e26359b3f76db6c94af4c6921ec610ec /* Line.cpp */,
 				875efb009cbf988253f356dd65974a02 /* VisualPlayer.h */,
+				160c800a2921eba76fb218396a1d48c6 /* VisualPlayer.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

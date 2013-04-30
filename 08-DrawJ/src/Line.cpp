@@ -163,11 +163,11 @@ void Line::updateBox(){
         referenceBox.x = linePos*(float)ofGetWidth();
         referenceBox.width = lineLenght*(float)ofGetWidth();
         
-        referenceBox.height = 15;
+        referenceBox.height = REFERENCEBOX_HEIGHT;
         referenceBox.y = (ofGetHeight()-player->height) +
                           ofMap(stroke,
                                 0,MAX_LINE_WIDTH,
-                                (player->height-referenceBox.height)-referenceBox.height*0.5,player->height*0.1, true);
+                                player->height*0.9-referenceBox.height,player->height*0.1, true);
     }
 }
 
@@ -186,7 +186,7 @@ void Line::moveRefTo( float _x, float _y ){
             float st = _y - (ofGetHeight()-player->height);
             stroke = ofMap(st,
                            player->height*0.1, player->height-referenceBox.height-referenceBox.height*0.5,
-                           MAX_LINE_WIDTH, 0, true);
+                           MAX_LINE_WIDTH,0, true);
             
             updateBox();
         }
@@ -222,7 +222,7 @@ void Line::draw(float _time,bool _NOGL ){
             }
             ofEndShape(false);
 
-        } else if (!isFinish() || _time == 0.0 || _time > startTime+getDuration() ){
+        } else if (!isFinish() || _time == 0.0 || _time > startTime+getDuration() || bSelected ){
             mesh.draw();
         } else if ( _time <= startTime+getDuration() ){
             float relativeTime = _time - startTime;
