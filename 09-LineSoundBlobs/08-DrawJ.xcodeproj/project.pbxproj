@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3DBF6D1C1712365400EE7682 /* ofxDOF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DBF6D141712365400EE7682 /* ofxDOF.cpp */; };
+		143b47270404c981e9c3eb64e3330d30 /* Line.cpp in Sources */ = {isa = PBXBuildFile; fileRef = e26359b3f76db6c94af4c6921ec610ec /* Line.cpp */; };
+		3D1C846A1741B7FD00F844BB /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C84661741B7FD00F844BB /* fft.cpp */; };
+		3D1C846B1741B7FD00F844BB /* fftOctaveAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C84681741B7FD00F844BB /* fftOctaveAnalyzer.cpp */; };
+		5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */; };
+		63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */; };
+		933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */; };
+		9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -28,8 +34,7 @@
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
-		a3db390b247668445c987e352e42cd45 /* fftOctaveAnalyzer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = bbbcfcdaa239b188b0fa2fc8ff3e877a /* fftOctaveAnalyzer.cpp */; };
-		aaa75f62142775abbf533f08cdb5b300 /* fft.cpp in Sources */ = {isa = PBXBuildFile; fileRef = d8637ddb597e5d9d2128b94dd324ad36 /* fft.cpp */; };
+		b90b5591a1f8a136a746265a2d7b079a /* TimeLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 160c800a2921eba76fb218396a1d48c6 /* TimeLine.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,11 +68,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3DBF6D121712365400EE7682 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		3DBF6D141712365400EE7682 /* ofxDOF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxDOF.cpp; sourceTree = "<group>"; };
-		3DBF6D151712365400EE7682 /* ofxDOF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxDOF.h; sourceTree = "<group>"; };
-		5ca08ebd61d39567946a6e91d201821b /* fft.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = fft.h; path = src/fft/fft.h; sourceTree = SOURCE_ROOT; };
-		847a22d2acd6d31dabe2907a9b28a2a8 /* fftOctaveAnalyzer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = fftOctaveAnalyzer.h; path = src/fft/fftOctaveAnalyzer.h; sourceTree = SOURCE_ROOT; };
+		01dcc0911400f9acf5b65578af4ec8f9 /* ofxXmlSettings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
+		160c800a2921eba76fb218396a1d48c6 /* TimeLine.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = TimeLine.cpp; path = src/TimeLine.cpp; sourceTree = SOURCE_ROOT; };
+		2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxml.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxml.cpp; sourceTree = SOURCE_ROOT; };
+		3D1C84661741B7FD00F844BB /* fft.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fft.cpp; sourceTree = "<group>"; };
+		3D1C84671741B7FD00F844BB /* fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fft.h; sourceTree = "<group>"; };
+		3D1C84681741B7FD00F844BB /* fftOctaveAnalyzer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fftOctaveAnalyzer.cpp; sourceTree = "<group>"; };
+		3D1C84691741B7FD00F844BB /* fftOctaveAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fftOctaveAnalyzer.h; sourceTree = "<group>"; };
+		50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
+		721f0401ad0b6dc50a6068a7197b92d0 /* Line.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = Line.h; path = src/Line.h; sourceTree = SOURCE_ROOT; };
+		832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlerror.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
+		875efb009cbf988253f356dd65974a02 /* TimeLine.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = TimeLine.h; path = src/TimeLine.h; sourceTree = SOURCE_ROOT; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -79,7 +90,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* 07-PHI-Sound-Visualiser-DoFDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "07-PHI-Sound-Visualiser-DoFDebug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* 08-DrawJDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "08-DrawJDebug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = testApp.cpp; path = src/testApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = testApp.h; path = src/testApp.h; sourceTree = SOURCE_ROOT; };
@@ -92,8 +103,9 @@
 		E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		E7E077E715D3B6510020DFD4 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		E7F985F515E0DE99003869B5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		bbbcfcdaa239b188b0fa2fc8ff3e877a /* fftOctaveAnalyzer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = fftOctaveAnalyzer.cpp; path = src/fft/fftOctaveAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
-		d8637ddb597e5d9d2128b94dd324ad36 /* fft.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = fft.cpp; path = src/fft/fft.cpp; sourceTree = SOURCE_ROOT; };
+		b21e7e5f548eea92f368040bb1aa2f69 /* tinyxml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tinyxml.h; path = ../../../addons/ofxXmlSettings/libs/tinyxml.h; sourceTree = SOURCE_ROOT; };
+		e26359b3f76db6c94af4c6921ec610ec /* Line.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = Line.cpp; path = src/Line.cpp; sourceTree = SOURCE_ROOT; };
+		fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,29 +136,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3DBF6CFE1712365400EE7682 /* ofxDOF */ = {
+		1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */ = {
 			isa = PBXGroup;
 			children = (
-				3DBF6D121712365400EE7682 /* README.md */,
-				3DBF6D131712365400EE7682 /* src */,
+				6ecef0d76bc33727823eadffc320c44d /* src */,
+				6e54289412d2d94f45a051132369530c /* libs */,
 			);
-			name = ofxDOF;
-			path = ../../../addons/ofxDOF;
+			name = ofxXmlSettings;
 			sourceTree = "<group>";
 		};
-		3DBF6D131712365400EE7682 /* src */ = {
+		3D1C84651741B7FD00F844BB /* fft */ = {
 			isa = PBXGroup;
 			children = (
-				3DBF6D151712365400EE7682 /* ofxDOF.h */,
-				3DBF6D141712365400EE7682 /* ofxDOF.cpp */,
+				3D1C84661741B7FD00F844BB /* fft.cpp */,
+				3D1C84671741B7FD00F844BB /* fft.h */,
+				3D1C84681741B7FD00F844BB /* fftOctaveAnalyzer.cpp */,
+				3D1C84691741B7FD00F844BB /* fftOctaveAnalyzer.h */,
 			);
-			path = src;
+			path = fft;
+			sourceTree = "<group>";
+		};
+		6e54289412d2d94f45a051132369530c /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				2b40eda85beb63e46785bc299a638898 /* tinyxml.cpp */,
+				b21e7e5f548eea92f368040bb1aa2f69 /* tinyxml.h */,
+				832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */,
+				fc5da1c87211d4f6377da7199d8c5a1e /* tinyxmlparser.cpp */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		6ecef0d76bc33727823eadffc320c44d /* src */ = {
+			isa = PBXGroup;
+			children = (
+				50df87d612c5aae17aafa6c02c6bc570 /* ofxXmlSettings.cpp */,
+				01dcc0911400f9acf5b65578af4ec8f9 /* ofxXmlSettings.h */,
+			);
+			name = src;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				3DBF6CFE1712365400EE7682 /* ofxDOF */,
+				1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */,
 			);
 			name = addons;
 			sourceTree = "<group>";
@@ -207,7 +240,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* 07-PHI-Sound-Visualiser-DoFDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* 08-DrawJDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -217,7 +250,11 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
-				ee579665acfd7e6ccb4ee4bd337565f7 /* fft */,
+				721f0401ad0b6dc50a6068a7197b92d0 /* Line.h */,
+				e26359b3f76db6c94af4c6921ec610ec /* Line.cpp */,
+				875efb009cbf988253f356dd65974a02 /* TimeLine.h */,
+				160c800a2921eba76fb218396a1d48c6 /* TimeLine.cpp */,
+				3D1C84651741B7FD00F844BB /* fft */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -231,23 +268,12 @@
 			name = openFrameworks;
 			sourceTree = "<group>";
 		};
-		ee579665acfd7e6ccb4ee4bd337565f7 /* fft */ = {
-			isa = PBXGroup;
-			children = (
-				d8637ddb597e5d9d2128b94dd324ad36 /* fft.cpp */,
-				5ca08ebd61d39567946a6e91d201821b /* fft.h */,
-				bbbcfcdaa239b188b0fa2fc8ff3e877a /* fftOctaveAnalyzer.cpp */,
-				847a22d2acd6d31dabe2907a9b28a2a8 /* fftOctaveAnalyzer.h */,
-			);
-			name = fft;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* 07-PHI-Sound-Visualiser-DoF */ = {
+		E4B69B5A0A3A1756003C02F2 /* 08-DrawJ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "07-PHI-Sound-Visualiser-DoF" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "08-DrawJ" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -259,9 +285,9 @@
 			dependencies = (
 				E4EEB9AC138B136A00A80321 /* PBXTargetDependency */,
 			);
-			name = "07-PHI-Sound-Visualiser-DoF";
+			name = "08-DrawJ";
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* 07-PHI-Sound-Visualiser-DoFDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* 08-DrawJDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -269,7 +295,7 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "07-PHI-Sound-Visualiser-DoF" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "08-DrawJ" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -290,7 +316,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* 07-PHI-Sound-Visualiser-DoF */,
+				E4B69B5A0A3A1756003C02F2 /* 08-DrawJ */,
 			);
 		};
 /* End PBXProject section */
@@ -328,9 +354,14 @@
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* testApp.cpp in Sources */,
-				aaa75f62142775abbf533f08cdb5b300 /* fft.cpp in Sources */,
-				a3db390b247668445c987e352e42cd45 /* fftOctaveAnalyzer.cpp in Sources */,
-				3DBF6D1C1712365400EE7682 /* ofxDOF.cpp in Sources */,
+				143b47270404c981e9c3eb64e3330d30 /* Line.cpp in Sources */,
+				b90b5591a1f8a136a746265a2d7b079a /* TimeLine.cpp in Sources */,
+				63b57ac5bf4ef088491e0317dbb2ecaa /* ofxXmlSettings.cpp in Sources */,
+				933a2227713c720ceff80fd967d0a8ee /* tinyxml.cpp in Sources */,
+				9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */,
+				5a4349e9754d6fa14c0f2a3a1abc30b6 /* tinyxmlparser.cpp in Sources */,
+				3D1C846A1741B7FD00F844BB /* fft.cpp in Sources */,
+				3D1C846B1741B7FD00F844BB /* fftOctaveAnalyzer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +399,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
-					src/fft,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -403,7 +435,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(OF_CORE_HEADERS)",
 					src,
-					src/fft,
+					../../../addons/ofxXmlSettings/libs,
+					../../../addons/ofxXmlSettings/src,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -590,7 +623,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "07-PHI-Sound-Visualiser-DoF" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "08-DrawJ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -599,7 +632,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "07-PHI-Sound-Visualiser-DoF" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "08-DrawJ" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,
