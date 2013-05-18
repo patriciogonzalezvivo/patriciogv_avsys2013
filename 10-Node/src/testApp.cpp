@@ -13,6 +13,8 @@ void testApp::setup(){
     sServer.setName(ofGetTimestampString());
     pingpong.allocate(ofGetScreenWidth(), ofGetScreenHeight());
     video = NULL;
+    
+    reloadShader("shader.fs");
 }
 
 void jumpNextWord(int &_index, vector<string> &_words){
@@ -37,15 +39,15 @@ bool testApp::reloadShader(string _filePath){
 	GLuint err = glGetError();
 	
     if (_filePath != "none"){
-        shaderFilename = _filePath;
+        shaderFilename = ofToDataPath( _filePath );
 	}
     
 	shaderFile.clear();
-	shaderFile = ofFile( ofToDataPath( shaderFilename ) );
+	shaderFile = ofFile( shaderFilename );
 	shaderChangedTimes = getLastModified( shaderFile );
     lastTimeCheckMillis = ofGetElapsedTimeMillis();
     
-	ofBuffer shaderBuffer = ofBufferFromFile( ofToDataPath( shaderFilename ) );
+	ofBuffer shaderBuffer = ofBufferFromFile( shaderFilename);
 	
 	if( shaderBuffer.size() > 0 ){
         shader.setupShaderFromSource(GL_FRAGMENT_SHADER, shaderBuffer.getText());
@@ -147,6 +149,16 @@ void testApp::addUniform(UniformType _type, string _name){
         newTextBox->height = BOX_HEIGHT;
         newTextBox->bUpdated = true;
         
+        if (_name == "time" ){
+            newTextBox->text = "time";
+        } else if (_name == "mouse" ){
+            newTextBox->text = "mouse";
+        } else if (_name == "resolution" || _name == "windows" ){
+            newTextBox->text = "windows";
+        } else if ( _name == "screen" ){
+            newTextBox->text = "screen";
+        }
+        
         ofAddListener(newTextBox->textChanged, this, &testApp::reloadUniforms);
         uniforms.push_back(newTextBox);
     }
@@ -154,8 +166,8 @@ void testApp::addUniform(UniformType _type, string _name){
 
 void testApp::reloadUniforms(string &_text){
     bool bVideo = false;
+    int nTextures = 0;
     for(int i = 0; i < uniforms.size(); i++){
-        
         //  TEXTURES
         //
         if (uniforms[i]->type == UNIFORM_SAMPLE2DRECT) {
@@ -163,10 +175,11 @@ void testApp::reloadUniforms(string &_text){
                 bVideo = true;
             } else {
                 if (uniforms[i]->text.size() > 0){
-                    sTextures[i]->setServer( uniforms[i]->text );
+                    sTextures[nTextures]->setServer( uniforms[i]->text );
                 } else {
-                    sTextures[i]->sServer = uniforms[i]->text;
+                    sTextures[nTextures]->sServer = uniforms[i]->text;
                 }
+                nTextures++;
             }
         }
     }
@@ -257,6 +270,7 @@ void testApp::draw(){
     pingpong.swap();
     pingpong.dst->begin();
     shader.begin();
+    ofClear(0,0);
     int texLoc = 0;
     for (int i = 0; i < uniforms.size(); i++){
         if (uniforms[i]->type == UNIFORM_SAMPLE2DRECT) {
@@ -269,9 +283,9 @@ void testApp::draw(){
                 shader.setUniformTexture(uniforms[i]->name.c_str(),
                                          pingpong.src->getTextureReference(),
                                          texLoc + 1);
-            } else if ( sTextures[i]->sServer != "" ){
+            } else if ( sTextures[texLoc]->sServer != "" ){
                 shader.setUniformTexture(uniforms[i]->name.c_str(),
-                                         sTextures[i]->getTextureReference(),
+                                         sTextures[texLoc]->getTextureReference(),
                                          texLoc + 1);
             }
             
