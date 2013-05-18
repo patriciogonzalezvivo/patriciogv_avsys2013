@@ -268,9 +268,10 @@ void Line::draw(float _time){
             //  calculate displacement
             //
             float freq = (float)i/(float)points.size();
-            float disp = (points[i].fft[octave] - player->fft->averages[octave]) * sin( freq*TWO_PI );
-            pos.x += disp * cos(points[i].angle-PI*0.5);
-            pos.y += disp * sin(points[i].angle-PI*0.5);
+            float disp = (points[i].fft[octave] - player->fft->averages[octave]) * 5;//sin( freq*TWO_PI );
+            pos.x += disp * cos(points[i].angle-PI*0.5) * sin(freq*PI + ofGetElapsedTimef());
+            pos.y += disp * sin(points[i].angle-PI*0.5) * sin(freq*PI + ofGetElapsedTimef());
+;
             
             ofVertex(pos);
         }

@@ -12,7 +12,6 @@ void testApp::setup(){
 	// 4 num buffers (latency)
     //
     bufferSize = 512;
-	ofSoundStreamSetup(0,2,this, 44100, bufferSize, 4);
 	
 	left        = new float[bufferSize];
 	right       = new float[bufferSize];
@@ -39,6 +38,9 @@ void testApp::setup(){
     bCursor = true;
     bFlipped = false;
     ofHideCursor();
+    
+    ofSoundStreamSetup(0,2,this, 44100, bufferSize, 4);
+	
 }
 
 //--------------------------------------------------------------
