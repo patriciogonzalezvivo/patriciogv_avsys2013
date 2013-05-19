@@ -10,10 +10,11 @@ void testApp::setup(){
     
     oscReceiver.setup(PORT);
     
-    sServer.setName(ofGetTimestampString());
+    sServer.setName(ofGetTimestampString("%H-%M-%S"));
     pingpong.allocate(ofGetScreenWidth(), ofGetScreenHeight());
     video = NULL;
     
+    ofSetDataPathRoot("data/");
     reloadShader("shader.fs");
 }
 
@@ -149,14 +150,16 @@ void testApp::addUniform(UniformType _type, string _name){
         newTextBox->height = BOX_HEIGHT;
         newTextBox->bUpdated = true;
         
-        if (_name == "time" ){
+        if (_name == "time" && _type == UNIFORM_FLOAT){
             newTextBox->text = "time";
-        } else if (_name == "mouse" ){
+        } else if (_name == "mouse" && _type == UNIFORM_VEC2){
             newTextBox->text = "mouse";
-        } else if (_name == "resolution" || _name == "windows" ){
+        } else if ( (_name == "resolution" || _name == "windows" ) && _type == UNIFORM_VEC2 ){
             newTextBox->text = "windows";
-        } else if ( _name == "screen" ){
+        } else if ( _name == "screen" && _type == UNIFORM_VEC2 ){
             newTextBox->text = "screen";
+        } else if ( _name == "backbuffer" && _type == UNIFORM_SAMPLE2DRECT ){
+            newTextBox->text = "backbuffer";
         }
         
         ofAddListener(newTextBox->textChanged, this, &testApp::reloadUniforms);
@@ -296,6 +299,10 @@ void testApp::draw(){
                 shader.setUniform1f(uniforms[i]->name.c_str(), uniforms[i]->fValue);
             } else if (uniforms[i]->text == "time"){
                 shader.setUniform1f(uniforms[i]->name.c_str(), ofGetElapsedTimef());
+            } else if (uniforms[i]->text == "mouse.x"){
+                shader.setUniform1f(uniforms[i]->name.c_str(), mouseX);
+            } else if (uniforms[i]->text == "mouse.y"){
+                shader.setUniform1f(uniforms[i]->name.c_str(), mouseY);
             } else {
                 shader.setUniform1f(uniforms[i]->name.c_str(), ofToFloat(uniforms[i]->text) );
             }
@@ -308,7 +315,7 @@ void testApp::draw(){
             } else if (uniforms[i]->text == "screen"){
                 shader.setUniform2f(uniforms[i]->name.c_str(), ofGetScreenWidth(), ofGetScreenHeight() );
             } else if (uniforms[i]->text == "windows"){
-                shader.setUniform2f(uniforms[i]->name.c_str(), ofGetWindowWidth(), ofGetWindowHeight() );
+                shader.setUniform2f(uniforms[i]->name.c_str(), ofGetWidth(), ofGetHeight() );
             }else {
                 
                 //  If names a texture on a vec2 pass the resolution of it
@@ -403,10 +410,6 @@ void testApp::windowResized(int w, int h){
     pingpong.allocate(w, h);
 }
 
-//--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
-
-}
 
 //--------------------------------------------------------------
 void testApp::dragEvent(ofDragInfo dragInfo){ 

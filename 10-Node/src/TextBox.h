@@ -54,10 +54,14 @@ public:
 protected:
     void    keyPressed(ofKeyEventArgs &a);
 	void    mousePressed(ofMouseEventArgs& args);
+    void    mouseDragged(ofMouseEventArgs& args);
     void    mouseReleased(ofMouseEventArgs& args);
     
     void    beginEditing();
 	void    endEditing();
+    
+    ofPoint lastMousePos;
+    float   lastAngle;
     
     int     cursorPosition;
     int     cursorx, cursory;

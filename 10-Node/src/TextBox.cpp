@@ -29,6 +29,7 @@ TextBox::TextBox(UniformType _type, string _name) {
 	mouseDownInRect = false;
     
     ofAddListener(ofEvents().mousePressed, this, &TextBox::mousePressed);
+    ofAddListener(ofEvents().mouseDragged, this, &TextBox::mouseDragged);
     ofAddListener(ofEvents().mouseReleased, this, &TextBox::mouseReleased);
     isEnabled = true;
     
@@ -44,6 +45,7 @@ TextBox::~TextBox(){
     
 	if(isEnabled){
         ofRemoveListener(ofEvents().mousePressed, this, &TextBox::mousePressed);
+        ofRemoveListener(ofEvents().mouseDragged, this, &TextBox::mouseDragged);
 		ofRemoveListener(ofEvents().mouseReleased, this, &TextBox::mouseReleased);
 		isEnabled = false;
     }
@@ -105,12 +107,13 @@ void TextBox::draw() {
     ofDrawBitmapString(text, nameHeight,12);
     width = nameHeight+(text.size()+2)*8;
 	
+    int cursorPos;
 	//draw cursor line
     if(drawCursor) {
         ofPushStyle();
         float timeFrac = 0.5 * sin(3.0f * ofGetElapsedTimef()) + 0.5;
         ofColor col = ofGetStyle().color;
-		int cursorPos = nameHeight + 8*cursorx ;
+        cursorPos = nameHeight + 8*cursorx ;
         ofSetColor(col.r * timeFrac, col.g * timeFrac, col.b * timeFrac);
         ofSetLineWidth(3.0f);
 		//TODO: multiline with fontRef
@@ -119,20 +122,48 @@ void TextBox::draw() {
     }
 	
 	ofPopMatrix();
+    
+    if (type == UNIFORM_FLOAT && mouseDownInRect && ofGetMousePressed()) {
+        ofLine(x+nameHeight+16,y+height*0.5,lastMousePos.x,lastMousePos.y);
+    }
 }
 
 void TextBox::mousePressed(ofMouseEventArgs& args){
-	mouseDownInRect = inside(args.x, args.y);
+    ofPoint mouse = ofPoint(args.x,args.y);
+	mouseDownInRect = inside(mouse);
+    lastMousePos = mouse;
+}
+
+void TextBox::mouseDragged(ofMouseEventArgs& args){
+    ofPoint mouse = ofPoint(args.x,args.y);
+    
+    if (mouseDownInRect && type == UNIFORM_FLOAT)
+        if (text != "time" &&
+            text != "mouse.x" &&
+            text != "mouse.y" &&
+            text.find('/') != 0){
+            
+        ofPoint diff = mouse - lastMousePos;
+        float angle = atan2(diff.y,diff.x);
+        float diffAngle = (angle - lastAngle);
+        if (diffAngle < -PI) diffAngle += TWO_PI;
+        if (diffAngle > PI) diffAngle -= TWO_PI;
+            
+        float value = ofToFloat(text);
+        text = ofToString(value+diffAngle*0.01*diff.length());
+        
+        lastMousePos = mouse;
+        lastAngle = angle;
+    }
 }
 
 void TextBox::mouseReleased(ofMouseEventArgs& args){
-    
-    if(inside(args.x, args.y)) {
+    ofPoint mouse = ofPoint(args.x,args.y);
+    if(inside(mouse)) {
         if(!isEditing && mouseDownInRect){
 	        beginEditing();
         }
-    }
-    else if(isEditing){
+    } else if(isEditing){
 		endEditing();
 	}
 }
